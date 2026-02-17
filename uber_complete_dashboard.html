@@ -1,0 +1,1248 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uber Bangalore - Complete Analysis Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            border-bottom: 3px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 18px 35px;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 12px 12px 0 0;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #555;
+        }
+        
+        .nav-tab:hover {
+            background: #e9ecef;
+            transform: translateY(-3px);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .metric-card:hover::before {
+            top: -100%;
+            right: -100%;
+        }
+        
+        .metric-label {
+            font-size: 1em;
+            opacity: 0.95;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .metric-subtext {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+        
+        .chart-container {
+            margin: 35px 0;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .section-header {
+            color: #2c3e50;
+            font-size: 2em;
+            margin: 50px 0 30px 0;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            position: relative;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: #764ba2;
+        }
+        
+        .verdict-box {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .verdict-box h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .verdict-box p {
+            font-size: 1.3em;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        
+        .recommendation-box {
+            background: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .recommendation-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .recommendation-box ul {
+            color: #856404;
+            line-height: 2;
+            padding-left: 25px;
+        }
+        
+        .recommendation-box li {
+            margin: 10px 0;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border-left: 6px solid #17a2b8;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box h3 {
+            color: #0c5460;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .info-box ul {
+            color: #0c5460;
+            line-height: 2;
+            padding-left: 25px;
+        }
+        
+        .warning-box {
+            background: #f8d7da;
+            border-left: 6px solid #dc3545;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .warning-box ul {
+            color: #721c24;
+            line-height: 2;
+            padding-left: 25px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+        
+        .comparison-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 3px solid #e0e0e0;
+            color: #7f8c8d;
+        }
+        
+        .footer p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        
+        .highlight-green {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+        .highlight-red {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .highlight-blue {
+            color: #3498db;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Uber Bangalore Analysis</h1>
+            <p class="subtitle">Complete Business Intelligence Dashboard - UberXL vs Uber Go</p>
+            <p class="subtitle" style="font-size: 1em; margin-top: 5px;">Data Period: January 2024 (31 days)</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('overview')">📊 Dataset Overview</button>
+            <button class="nav-tab" onclick="showTab('business')">💼 Business Analysis</button>
+            <button class="nav-tab" onclick="showTab('driver')">👤 Driver Income</button>
+            <button class="nav-tab" onclick="showTab('insights')">💡 Final Verdict</button>
+        </div>
+
+        <!-- TAB 1: DATASET OVERVIEW -->
+        <div id="overview" class="tab-content active">
+            <h2 class="section-header">📊 Dataset Overview & Statistics</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">📈 Total Records</div>
+                    <div class="metric-value">200,000</div>
+                    <div class="metric-subtext">All bookings</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">🚗 UberXL Rides</div>
+                    <div class="metric-value">28,826</div>
+                    <div class="metric-subtext">50.1% of focus data</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">🚕 Uber Go Rides</div>
+                    <div class="metric-value">28,717</div>
+                    <div class="metric-subtext">49.9% of focus data</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">⚠️ Missing Data</div>
+                    <div class="metric-value">20.9%</div>
+                    <div class="metric-subtext">751,672 missing values</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div id="dataset-distribution"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="booking-status-all"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="success-comparison"></div>
+            </div>
+
+            <h2 class="section-header">⭐ Quality Metrics</h2>
+            
+            <div class="chart-container">
+                <div id="ratings-overview"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="cancellation-breakdown"></div>
+            </div>
+        </div>
+
+        <!-- TAB 2: BUSINESS ANALYSIS -->
+        <div id="business" class="tab-content">
+            <h2 class="section-header">💼 Business Profitability Analysis</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                    <div class="metric-label">💰 Total Revenue</div>
+                    <div class="metric-value">₹36.25M</div>
+                    <div class="metric-subtext">Monthly revenue (31 days)</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                    <div class="metric-label">💵 Net Profit</div>
+                    <div class="metric-value">₹22.09M</div>
+                    <div class="metric-subtext">After all expenses</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                    <div class="metric-label">📊 Profit Margin</div>
+                    <div class="metric-value">60.9%</div>
+                    <div class="metric-subtext">Overall margin</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <div class="metric-label">💸 Lost Revenue</div>
+                    <div class="metric-value">₹0.00M</div>
+                    <div class="metric-subtext">From cancellations</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div id="revenue-comparison"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="profit-comparison"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="cost-breakdown"></div>
+            </div>
+
+            <h2 class="section-header">📈 Operational Metrics</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>UberXL</th>
+                        <th>Uber Go</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Success Rate</strong></td>
+                        <td class="highlight-red">61.68%</td>
+                        <td class="highlight-red">61.82%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Revenue</strong></td>
+                        <td>₹18,141,482</td>
+                        <td>₹18,105,753</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Net Profit</strong></td>
+                        <td class="highlight-green">₹10,672,134</td>
+                        <td class="highlight-green">₹11,414,085</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Profit Margin</strong></td>
+                        <td>58.83%</td>
+                        <td>63.04%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Avg Fare</strong></td>
+                        <td>₹1020.33</td>
+                        <td>₹1019.93</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Avg Distance</strong></td>
+                        <td>15.53 km</td>
+                        <td>15.47 km</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fare per KM</strong></td>
+                        <td>₹65.69</td>
+                        <td>₹65.91</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Driver Rating</strong></td>
+                        <td>3.00/5.0</td>
+                        <td>2.99/5.0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="chart-container">
+                <div id="hourly-demand"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="location-analysis"></div>
+            </div>
+        </div>
+
+        <!-- TAB 3: DRIVER INCOME -->
+        <div id="driver" class="tab-content">
+            <h2 class="section-header">👤 Single Driver Monthly Income Analysis</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                    <div class="metric-label">🚗 UberXL Driver</div>
+                    <div class="metric-value">₹91,246</div>
+                    <div class="metric-subtext">Monthly net income</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                    <div class="metric-label">🚕 Uber Go Driver</div>
+                    <div class="metric-value">₹178,504</div>
+                    <div class="metric-subtext">Monthly net income</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                    <div class="metric-label">📅 Daily Earnings</div>
+                    <div class="metric-value">₹6,866</div>
+                    <div class="metric-subtext">Best performer</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                    <div class="metric-label">⏰ Hourly Rate</div>
+                    <div class="metric-value">₹687</div>
+                    <div class="metric-subtext">Best performer</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 Income Calculation Assumptions</h3>
+                <ul>
+                    <li><strong>UberXL Driver:</strong> 8 rides/day × 26 days = 208 rides/month</li>
+                    <li><strong>Uber Go Driver:</strong> 12 rides/day × 26 days = 312 rides/month</li>
+                    <li><strong>Working Hours:</strong> 10 hours/day</li>
+                    <li><strong>Working Days:</strong> 26 days/month (4 days off)</li>
+                </ul>
+            </div>
+
+            <div class="chart-container">
+                <div id="driver-income-comparison"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="driver-expense-breakdown"></div>
+            </div>
+
+            <h2 class="section-header">💰 Detailed Income Breakdown</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>UberXL Driver</th>
+                        <th>Uber Go Driver</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Monthly Rides</strong></td>
+                        <td>208 rides</td>
+                        <td>312 rides</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gross Income</strong></td>
+                        <td>₹212,229</td>
+                        <td>₹318,217</td>
+                    </tr>
+                    <tr>
+                        <td>- Uber Commission (25%)</td>
+                        <td class="highlight-red">₹53,057</td>
+                        <td class="highlight-red">₹79,554</td>
+                    </tr>
+                    <tr>
+                        <td>- Fuel Cost</td>
+                        <td class="highlight-red">₹25,848</td>
+                        <td class="highlight-red">₹28,969</td>
+                    </tr>
+                    <tr>
+                        <td>- Maintenance</td>
+                        <td class="highlight-red">₹8,077</td>
+                        <td class="highlight-red">₹8,691</td>
+                    </tr>
+                    <tr>
+                        <td>- Insurance</td>
+                        <td class="highlight-red">₹4,000</td>
+                        <td class="highlight-red">₹2,500</td>
+                    </tr>
+                    <tr>
+                        <td>- Vehicle EMI</td>
+                        <td class="highlight-red">₹25,000</td>
+                        <td class="highlight-red">₹15,000</td>
+                    </tr>
+                    <tr>
+                        <td>- Other Costs</td>
+                        <td class="highlight-red">₹5,000</td>
+                        <td class="highlight-red">₹5,000</td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold;">
+                        <td><strong>NET INCOME</strong></td>
+                        <td class="highlight-green">₹91,246</td>
+                        <td class="highlight-green">₹178,504</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Daily Income</strong></td>
+                        <td>₹3,509</td>
+                        <td>₹6,866</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hourly Income</strong></td>
+                        <td>₹351</td>
+                        <td>₹687</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="chart-container">
+                <div id="scenario-analysis"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="emi-comparison"></div>
+            </div>
+
+            <div class="chart-container">
+                <div id="yearly-projection"></div>
+            </div>
+        </div>
+
+        <!-- TAB 4: FINAL VERDICT -->
+        <div id="insights" class="tab-content">
+            <h2 class="section-header">🎯 Final Verdict & Recommendations</h2>
+            
+            <div class="verdict-box">
+                <h2>🏆 Winner: Uber Go</h2>
+                <p><strong>Monthly Profit:</strong> ₹11414.1K vs ₹10672.1K</p>
+                <p><strong>Profit Margin:</strong> 63.0% vs 58.8%</p>
+                <p><strong>Best Driver Income:</strong> Uber Go (₹178,504)</p>
+            </div>
+
+            <div class="recommendation-box">
+                <h3>✅ Positive Indicators</h3>
+                <ul>
+                    <li><strong>Strong Revenue:</strong> Total revenue of ₹36.25M shows robust market demand</li>
+                    <li><strong>Profitability:</strong> Net profit of ₹22.09M demonstrates viable business model</li>
+                    <li><strong>Driver Income:</strong> Monthly earnings range from ₹91,246 to ₹178,504</li>
+                    <li><strong>Market Size:</strong> 57,543 rides in 31 days shows good volume</li>
+                    <li><strong>Average Ratings:</strong> Both vehicles maintain acceptable ratings above 3.0</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h3>⚠️ Critical Concerns</h3>
+                <ul>
+                    <li><strong>Success Rate:</strong> 61.7% is below industry benchmark of 70-80%</li>
+                    <li><strong>Revenue Leakage:</strong> ₹0.00M lost due to cancellations and incomplete rides</li>
+                    <li><strong>Driver Cancellations:</strong> 18.2% of rides cancelled by drivers</li>
+                    <li><strong>Customer Cancellations:</strong> 7.2% of rides cancelled by customers</li>
+                    <li><strong>Rating Improvement Needed:</strong> Target should be 4.0+ for competitive advantage</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>💡 Strategic Recommendations</h3>
+                <ul>
+                    <li><strong>For UberXL:</strong>
+                        <ul>
+                            <li>Focus on longer-distance rides and airport runs</li>
+                            <li>Target premium customers and corporate bookings</li>
+                            <li>Maintain vehicle quality to justify higher fares</li>
+                            <li>Avg fare: ₹1020, Distance: 15.5 km</li>
+                        </ul>
+                    </li>
+                    <li><strong>For Uber Go:</strong>
+                        <ul>
+                            <li>Maximize ride volume through high-demand areas</li>
+                            <li>Focus on short-medium distance city trips</li>
+                            <li>Optimize fuel efficiency for better margins</li>
+                            <li>Avg fare: ₹1020, Distance: 15.5 km</li>
+                        </ul>
+                    </li>
+                    <li><strong>Operational Improvements:</strong>
+                        <ul>
+                            <li>Improve success rate from 61.7% to 75%+ to capture ₹0K lost revenue</li>
+                            <li>Implement driver training to reduce cancellations</li>
+                            <li>Address top cancellation reasons (AC issues, wrong address, customer issues)</li>
+                            <li>Target peak hours: 7-10 AM and 5-9 PM</li>
+                            <li>Focus on high-demand locations: Hebbal, Bellandur, Koramangala</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h2 class="section-header">📊 Final Decision Matrix</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>Score (out of 10)</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Revenue Potential</strong></td>
+                        <td class="highlight-green">8/10</td>
+                        <td>₹36.2M monthly revenue shows strong market</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Profitability</strong></td>
+                        <td class="highlight-green">30/10</td>
+                        <td>60.9% margin - Excellent</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Operational Efficiency</strong></td>
+                        <td class="highlight-red">6/10</td>
+                        <td>61.7% success rate - Below benchmark</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Driver Income</strong></td>
+                        <td class="highlight-green">7/10</td>
+                        <td>₹178,504 monthly for best performer</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Market Demand</strong></td>
+                        <td class="highlight-green">8/10</td>
+                        <td>57,543 rides shows strong demand</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customer Satisfaction</strong></td>
+                        <td class="highlight-red">6/10</td>
+                        <td>Average ratings need improvement to 4.0+</td>
+                    </tr>
+                    <tr style="background: #d4edda; font-weight: bold; font-size: 1.2em;">
+                        <td><strong>OVERALL SCORE</strong></td>
+                        <td class="highlight-green">7.2/10</td>
+                        <td><strong>RECOMMENDED - With operational improvements</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="verdict-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <h2>📋 Final Recommendation</h2>
+                <p><strong>GO AHEAD - Business is Profitable</strong></p>
+                <p>Monthly Profit: ₹22.09M | Yearly Projection: ₹265.03M</p>
+                <p>Focus more on Uber Go for better margins (63.0% vs 58.8%)</p>
+                <p style="margin-top: 20px; font-size: 1.1em;">⚠️ Priority: Improve success rate to 75%+ to unlock ₹0K additional monthly revenue</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>📅 Report Generated:</strong> February 17, 2026 at 09:10 AM</p>
+            <p><strong>📊 Data Period:</strong> January 2024 (31 days)</p>
+            <p><strong>🔧 Analysis Tool:</strong> Python with Plotly Interactive Visualizations</p>
+            <p style="margin-top: 20px;">Dashboard created for business decision-making purposes</p>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching function
+        function showTab(tabName) {
+            // Hide all tab contents
+            var contents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+            
+            // Remove active class from all tabs
+            var tabs = document.getElementsByClassName('nav-tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Chart configuration
+        var config = {responsive: true, displayModeBar: true, displaylogo: false};
+        
+        // Common layout settings
+        var layoutSettings = {
+            plot_bgcolor: 'white',
+            paper_bgcolor: 'white',
+            font: {family: 'Segoe UI', size: 12},
+            margin: {l: 60, r: 40, t: 60, b: 60}
+        };
+
+        // 1. Dataset Distribution
+        var datasetDist = [{
+            values: [28826, 28717],
+            labels: ['UberXL', 'Uber Go'],
+            type: 'pie',
+            marker: {colors: ['#3498db', '#2ecc71']},
+            textinfo: 'label+percent+value',
+            textfont: {size: 14},
+            hole: 0.4
+        }];
+        
+        var datasetLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Dataset Distribution - UberXL vs Uber Go', font: {size: 18, color: '#2c3e50'}},
+            annotations: [{
+                text: '57,543<br>Total Rides',
+                showarrow: false,
+                font: {size: 16, color: '#2c3e50'}
+            }]
+        });
+        
+        Plotly.newPlot('dataset-distribution', datasetDist, datasetLayout, config);
+
+        // 2. Booking Status - All
+        var bookingStatusData = [{
+            x: ['Success', 'Cancelled<br>by Driver', 'Cancelled<br>by Customer', 'Incomplete'],
+            y: [35532, 
+                10465,
+                4141,
+                7405],
+            type: 'bar',
+            marker: {color: ['#2ecc71', '#e74c3c', '#f39c12', '#e67e22']},
+            text: ['35,532',
+                   '10,465',
+                   '4,141',
+                   '7,405'],
+            textposition: 'outside',
+            textfont: {size: 14, color: 'black'}
+        }];
+        
+        var bookingStatusLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Overall Booking Status Distribution', font: {size: 18}},
+            yaxis: {title: 'Number of Rides', gridcolor: '#e0e0e0'},
+            xaxis: {title: 'Status'}
+        });
+        
+        Plotly.newPlot('booking-status-all', bookingStatusData, bookingStatusLayout, config);
+
+        // 3. Success Rate Comparison
+        var successData = [{
+            x: ['UberXL', 'Uber Go', 'Overall'],
+            y: [61.68042739193783, 61.817042170143125, 61.748605390751266],
+            type: 'bar',
+            marker: {color: ['#3498db', '#2ecc71', '#9b59b6']},
+            text: ['61.7%', '61.8%', '61.7%'],
+            textposition: 'outside',
+            textfont: {size: 14}
+        }];
+        
+        var successLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Success Rate Comparison', font: {size: 18}},
+            yaxis: {title: 'Success Rate (%)', range: [0, 100], gridcolor: '#e0e0e0'},
+            shapes: [{
+                type: 'line',
+                x0: -0.5,
+                x1: 2.5,
+                y0: 70,
+                y1: 70,
+                line: {color: 'red', width: 3, dash: 'dash'}
+            }],
+            annotations: [{
+                x: 2.5,
+                y: 70,
+                text: 'Industry Benchmark: 70%',
+                showarrow: false,
+                xanchor: 'right',
+                font: {size: 12, color: 'red'}
+            }]
+        });
+        
+        Plotly.newPlot('success-comparison', successData, successLayout, config);
+
+        // 4. Ratings Overview
+        var ratingsData = [
+            {
+                x: ['Driver Rating', 'Customer Rating'],
+                y: [3.002795275590551, 3.0067997750281217],
+                name: 'UberXL',
+                type: 'bar',
+                marker: {color: '#3498db'},
+                text: ['3.00', '3.01'],
+                textposition: 'outside'
+            },
+            {
+                x: ['Driver Rating', 'Customer Rating'],
+                y: [2.9886322667868406, 2.997848129788193],
+                name: 'Uber Go',
+                type: 'bar',
+                marker: {color: '#2ecc71'},
+                text: ['2.99', '3.00'],
+                textposition: 'outside'
+            }
+        ];
+        
+        var ratingsLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Average Ratings Comparison', font: {size: 18}},
+            yaxis: {title: 'Rating (out of 5)', range: [0, 5], gridcolor: '#e0e0e0'},
+            barmode: 'group',
+            shapes: [{
+                type: 'line',
+                x0: -0.5,
+                x1: 1.5,
+                y0: 4.0,
+                y1: 4.0,
+                line: {color: 'orange', width: 2, dash: 'dash'}
+            }],
+            annotations: [{
+                x: 1.5,
+                y: 4.0,
+                text: 'Target: 4.0',
+                showarrow: false,
+                xanchor: 'right',
+                font: {color: 'orange'}
+            }]
+        });
+        
+        Plotly.newPlot('ratings-overview', ratingsData, ratingsLayout, config);
+
+        // 5. Cancellation Breakdown
+        var cancelData = [{
+            labels: ['Success', 'Driver Cancel', 'Customer Cancel', 'Incomplete'],
+            values: [35532, 
+                    10465,
+                    4141,
+                    7405],
+            type: 'pie',
+            marker: {colors: ['#2ecc71', '#e74c3c', '#f39c12', '#e67e22']},
+            textinfo: 'label+percent',
+            textfont: {size: 13},
+            hole: 0.4
+        }];
+        
+        var cancelLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Booking Outcome Distribution', font: {size: 18}},
+            annotations: [{
+                text: '61.7%<br>Success',
+                showarrow: false,
+                font: {size: 16, color: '#2c3e50'}
+            }]
+        });
+        
+        Plotly.newPlot('cancellation-breakdown', cancelData, cancelLayout, config);
+
+        // 6. Revenue Comparison
+        var revenueData = [{
+            x: ['UberXL', 'Uber Go'],
+            y: [18141481.86, 18105752.74],
+            type: 'bar',
+            marker: {color: ['#3498db', '#2ecc71']},
+            text: ['₹18141K', '₹18106K'],
+            textposition: 'outside',
+            textfont: {size: 16, color: 'black'}
+        }];
+        
+        var revenueLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Total Revenue Comparison (31 days)', font: {size: 18}},
+            yaxis: {title: 'Revenue (₹)', gridcolor: '#e0e0e0'}
+        });
+        
+        Plotly.newPlot('revenue-comparison', revenueData, revenueLayout, config);
+
+        // 7. Profit Comparison
+        var profitData = [{
+            x: ['UberXL', 'Uber Go'],
+            y: [10672133.615, 11414084.667],
+            type: 'bar',
+            marker: {color: ['#3498db', '#2ecc71']},
+            text: ['₹10672K', '₹11414K'],
+            textposition: 'outside',
+            textfont: {size: 16, color: 'black'}
+        }];
+        
+        var profitLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Net Profit Comparison', font: {size: 18}},
+            yaxis: {title: 'Net Profit (₹)', gridcolor: '#e0e0e0'}
+        });
+        
+        Plotly.newPlot('profit-comparison', profitData, profitLayout, config);
+
+        // 8. Cost Breakdown - Stacked
+        var costData = [
+            {
+                x: ['UberXL', 'Uber Go'],
+                y: [4535370.465, 4526438.185],
+                name: 'Commission',
+                type: 'bar',
+                marker: {color: '#e74c3c'}
+            },
+            {
+                x: ['UberXL', 'Uber Go'],
+                y: [2209506.88, 1648253.7599999998],
+                name: 'Fuel',
+                type: 'bar',
+                marker: {color: '#f39c12'}
+            },
+            {
+                x: ['UberXL', 'Uber Go'],
+                y: [690470.8999999999, 494476.12799999997],
+                name: 'Maintenance',
+                type: 'bar',
+                marker: {color: '#3498db'}
+            },
+            {
+                x: ['UberXL', 'Uber Go'],
+                y: [34000, 22500],
+                name: 'Fixed Costs',
+                type: 'bar',
+                marker: {color: '#9b59b6'}
+            },
+            {
+                x: ['UberXL', 'Uber Go'],
+                y: [10672133.615, 11414084.667],
+                name: 'Net Profit',
+                type: 'bar',
+                marker: {color: '#2ecc71'}
+            }
+        ];
+        
+        var costLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Revenue Distribution & Cost Breakdown', font: {size: 18}},
+            barmode: 'stack',
+            yaxis: {title: 'Amount (₹)', gridcolor: '#e0e0e0'}
+        });
+        
+        Plotly.newPlot('cost-breakdown', costData, costLayout, config);
+
+        // 9. Hourly Demand Pattern
+        var hourlyData = [
+            {
+                x: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+                y: [763872.95,722056.78,696868.55,777619.65,767681.21,717961.15,720891.89,783344.11,747764.79,734550.79,752781.0,751971.49,747632.2,795778.23,809523.62,789107.12,751019.56,736855.31,749416.99,731798.58,767040.28,810246.59,772010.49,743688.53],
+                name: 'UberXL',
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: {color: '#3498db', width: 3},
+                marker: {size: 8}
+            },
+            {
+                x: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23],
+                y: [766342.17,718886.76,710090.18,732963.12,754310.51,734176.97,779088.11,811898.29,693323.95,748505.13,770912.61,750538.58,751747.13,804605.84,677647.92,769116.72,774040.51,749659.88,759816.11,777645.18,754427.24,782737.07,776682.63,756590.13],
+                name: 'Uber Go',
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: {color: '#2ecc71', width: 3},
+                marker: {size: 8}
+            }
+        ];
+        
+        var hourlyLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Revenue by Hour of Day', font: {size: 18}},
+            xaxis: {title: 'Hour of Day', gridcolor: '#e0e0e0'},
+            yaxis: {title: 'Revenue (₹)', gridcolor: '#e0e0e0'}
+        });
+        
+        Plotly.newPlot('hourly-demand', hourlyData, hourlyLayout, config);
+
+        // 10. Top Locations
+        var locationData = [
+            {
+                x: [408,381,380,379,370,369,369,365,364,363],
+                y: ["Bellandur","JP Nagar","Indiranagar","Hormavu","Basavanagudi","MG Road","Sadashivanagar","Koramangala","Devanahalli","Hebbal"],
+                name: 'UberXL',
+                type: 'bar',
+                orientation: 'h',
+                marker: {color: '#3498db'}
+            },
+            {
+                x: [397,391,387,386,377,376,373,372,372,371],
+                y: ["Hebbal","Malleswaram","Shivaji Nagar","RT Nagar","KR Puram","Bellandur","Yeshwanthpur","Yelahanka","Bommanahalli","Hennur"],
+                name: 'Uber Go',
+                type: 'bar',
+                orientation: 'h',
+                marker: {color: '#2ecc71'}
+            }
+        ];
+        
+        var locationLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Top 10 Pickup Locations', font: {size: 18}},
+            xaxis: {title: 'Number of Rides', gridcolor: '#e0e0e0'},
+            barmode: 'group',
+            height: 500
+        });
+        
+        Plotly.newPlot('location-analysis', locationData, locationLayout, config);
+
+        // 11. Driver Income Comparison
+        var driverIncData = [
+            {
+                x: ['Gross Income', 'Expenses', 'Net Income'],
+                y: [212228.8091608549, 120982.70162879639, 91246.10753205851],
+                name: 'UberXL Driver',
+                type: 'bar',
+                marker: {color: '#3498db'},
+                text: ['₹212,229', '₹120,983', '₹91,246'],
+                textposition: 'outside'
+            },
+            {
+                x: ['Gross Income', 'Expenses', 'Net Income'],
+                y: [318217.3757818837, 139713.85977782783, 178503.51600405588],
+                name: 'Uber Go Driver',
+                type: 'bar',
+                marker: {color: '#2ecc71'},
+                text: ['₹318,217', '₹139,714', '₹178,504'],
+                textposition: 'outside'
+            }
+        ];
+        
+        var driverIncLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Single Driver Monthly Income Breakdown', font: {size: 18}},
+            barmode: 'group',
+            yaxis: {title: 'Amount (₹)', gridcolor: '#e0e0e0'}
+        });
+        
+        Plotly.newPlot('driver-income-comparison', driverIncData, driverIncLayout, config);
+
+        // 12. Driver Expense Breakdown - Pie
+        var driverExpData = [
+            {
+                labels: ['Commission', 'Fuel', 'Maintenance', 'Insurance', 'EMI', 'Other'],
+                values: [53057.202290213725, 25847.999496062992, 8077.4998425196845, 
+                        4000, 25000, 5000],
+                type: 'pie',
+                domain: {x: [0, 0.48]},
+                name: 'UberXL',
+                marker: {colors: ['#e74c3c', '#f39c12', '#3498db', '#9b59b6', '#e67e22', '#95a5a6']},
+                textinfo: 'label+percent',
+                textfont: {size: 12}
+            },
+            {
+                labels: ['Commission', 'Fuel', 'Maintenance', 'Insurance', 'EMI', 'Other'],
+                values: [79554.34394547093, 28968.85833258224, 8690.657499774672, 
+                        2500, 15000, 5000],
+                type: 'pie',
+                domain: {x: [0.52, 1]},
+                name: 'Uber Go',
+                marker: {colors: ['#e74c3c', '#f39c12', '#3498db', '#9b59b6', '#e67e22', '#95a5a6']},
+                textinfo: 'label+percent',
+                textfont: {size: 12}
+            }
+        ];
+        
+        var driverExpLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Driver Monthly Expense Distribution', font: {size: 18}},
+            annotations: [
+                {text: 'UberXL', x: 0.20, y: -0.1, showarrow: false, font: {size: 16}},
+                {text: 'Uber Go', x: 0.80, y: -0.1, showarrow: false, font: {size: 16}}
+            ],
+            showlegend: true
+        });
+        
+        Plotly.newPlot('driver-expense-breakdown', driverExpData, driverExpLayout, config);
+
+        // 13. Scenario Analysis
+        var scenarioData = [
+            {
+                x: ['Worst Case<br>(-30%)', 'Normal', 'Best Case<br>(+30%)'],
+                y: [63872.27527244095, 91246.10753205851, 118619.93979167606],
+                name: 'UberXL',
+                type: 'bar',
+                marker: {color: '#3498db'},
+                text: ['₹63,872', '₹91,246', '₹118,620'],
+                textposition: 'outside'
+            },
+            {
+                x: ['Worst Case<br>(-30%)', 'Normal', 'Best Case<br>(+30%)'],
+                y: [124952.46120283911, 178503.51600405588, 232054.57080527267],
+                name: 'Uber Go',
+                type: 'bar',
+                marker: {color: '#2ecc71'},
+                text: ['₹124,952', '₹178,504', '₹232,055'],
+                textposition: 'outside'
+            }
+        ];
+        
+        var scenarioLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Income Scenarios - Best, Normal, Worst Case', font: {size: 18}},
+            barmode: 'group',
+            yaxis: {title: 'Monthly Income (₹)', gridcolor: '#e0e0e0'},
+            shapes: [{
+                type: 'line',
+                x0: -0.5,
+                x1: 2.5,
+                y0: 30000,
+                y1: 30000,
+                line: {color: 'red', width: 2, dash: 'dash'}
+            }],
+            annotations: [{
+                x: 2.5,
+                y: 30000,
+                text: 'Target: ₹30K',
+                showarrow: false,
+                xanchor: 'right',
+                font: {color: 'red'}
+            }]
+        });
+        
+        Plotly.newPlot('scenario-analysis', scenarioData, scenarioLayout, config);
+
+        // 14. With/Without EMI
+        var emiData = [
+            {
+                x: ['With EMI', 'Without EMI'],
+                y: [91246.10753205851, 116246.10753205851],
+                name: 'UberXL',
+                type: 'bar',
+                marker: {color: '#3498db'},
+                text: ['₹91,246', '₹116,246'],
+                textposition: 'outside'
+            },
+            {
+                x: ['With EMI', 'Without EMI'],
+                y: [178503.51600405588, 193503.51600405588],
+                name: 'Uber Go',
+                type: 'bar',
+                marker: {color: '#2ecc71'},
+                text: ['₹178,504', '₹193,504'],
+                textposition: 'outside'
+            }
+        ];
+        
+        var emiLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Income Comparison: With vs Without Vehicle EMI', font: {size: 18}},
+            barmode: 'group',
+            yaxis: {title: 'Monthly Income (₹)', gridcolor: '#e0e0e0'}
+        });
+        
+        Plotly.newPlot('emi-comparison', emiData, emiLayout, config);
+
+        // 15. Yearly Projection
+        var yearlyData = [
+            {
+                x: ['UberXL', 'Uber Go'],
+                y: [1094953.2903847022, 2142042.1920486707],
+                type: 'bar',
+                marker: {color: ['#3498db', '#2ecc71']},
+                text: ['₹1095K', '₹2142K'],
+                textposition: 'outside',
+                textfont: {size: 16, color: 'black'}
+            }
+        ];
+        
+        var yearlyLayout = Object.assign({}, layoutSettings, {
+            title: {text: 'Yearly Income Projection (12 months)', font: {size: 18}},
+            yaxis: {title: 'Yearly Income (₹)', gridcolor: '#e0e0e0'}
+        });
+        
+        Plotly.newPlot('yearly-projection', yearlyData, yearlyLayout, config);
+    </script>
+</body>
+</html>

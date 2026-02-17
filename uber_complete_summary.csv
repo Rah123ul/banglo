@@ -1,0 +1,41 @@
+Category,Value
+=== DATASET OVERVIEW ===,
+Total Bookings,"200,000"
+UberXL Rides,"28,826"
+Uber Go Rides,"28,717"
+Missing Data %,20.9%
+,
+=== BUSINESS METRICS ===,
+Total Revenue,"₹36,247,235"
+UberXL Revenue,"₹18,141,482"
+Uber Go Revenue,"₹18,105,753"
+Net Profit,"₹22,086,218"
+UberXL Profit,"₹10,672,134"
+Uber Go Profit,"₹11,414,085"
+Overall Profit Margin,60.93%
+Lost Revenue,₹0
+,
+=== OPERATIONAL METRICS ===,
+Overall Success Rate,61.75%
+UberXL Success Rate,61.68%
+Uber Go Success Rate,61.82%
+UberXL Avg Rating,3.00/5.0
+Uber Go Avg Rating,2.99/5.0
+Driver Cancellations,"10,465"
+Customer Cancellations,"4,141"
+,
+=== DRIVER INCOME ===,
+UberXL Driver Monthly,"₹91,246"
+Uber Go Driver Monthly,"₹178,504"
+UberXL Daily Income,"₹3,509"
+Uber Go Daily Income,"₹6,866"
+UberXL Hourly Income,₹351
+Uber Go Hourly Income,₹687
+,
+=== PROJECTIONS ===,
+UberXL Yearly Income,"₹1,094,953"
+Uber Go Yearly Income,"₹2,142,042"
+Best Case UberXL,"₹118,620"
+Best Case Uber Go,"₹232,055"
+Worst Case UberXL,"₹63,872"
+Worst Case Uber Go,"₹124,952"
