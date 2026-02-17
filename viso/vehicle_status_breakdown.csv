@@ -1,0 +1,5 @@
+Vehicle Type,Cancelled by Customer,Cancelled by Driver,Incomplete,Success,Total,Success_Rate%,Driver_Cancel%,Customer_Cancel%,Incomplete%
+Go Sedan,2066,5222,3677,17752,28717,61.82,18.18,7.19,12.8
+Non-AC Taxi,2115,5032,3717,17709,28573,61.98,17.61,7.4,13.01
+Uber Go,1991,5077,3588,17507,28163,62.16,18.03,7.07,12.74
+UberXL,2075,5243,3728,17780,28826,61.68,18.19,7.2,12.93

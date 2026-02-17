@@ -1,0 +1,5 @@
+Vehicle Type,Rides per Day,Avg Distance (km),Time per Ride (mins),Total Driving (mins),Total Wait (mins),Wait per Gap (mins),Driving %,Waiting %
+UberXL,9,15.53,46.6,419.41,300.59,37.57,58.25,41.75
+Uber Go,13,15.41,46.24,601.12,118.88,9.91,83.49,16.51
+Go Sedan,11,15.47,46.42,510.67,209.33,20.93,70.93,29.07
+Non-AC Taxi,10,15.57,46.71,467.06,252.94,28.1,64.87,35.13

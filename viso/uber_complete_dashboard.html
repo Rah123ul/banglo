@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uber Bangalore - Complete Analysis Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            border-bottom: 3px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-tab {
+            padding: 18px 35px;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 12px 12px 0 0;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #555;
+        }
+        
+        .nav-tab:hover {
+            background: #e9ecef;
+            transform: translateY(-3px);
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        
+        .metric-card:hover::before {
+            top: -100%;
+            right: -100%;
+        }
+        
+        .metric-label {
+            font-size: 1em;
+            opacity: 0.95;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .metric-subtext {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+        
+        .chart-container {
+            margin: 35px 0;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .image-container {
+            margin: 35px 0;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        .section-header {
+            color: #2c3e50;
+            font-size: 2em;
+            margin: 50px 0 30px 0;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            position: relative;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: #764ba2;
+        }
+        
+        .warning-box {
+            background: #f8d7da;
+            border-left: 6px solid #dc3545;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        
+        .warning-box h3 {
+            color: #721c24;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .warning-box p {
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 Uber Bangalore Analysis</h1>
+            <p class="subtitle">Complete Business Intelligence Dashboard - UberXL vs Uber Go</p>
+            <p class="subtitle" style="font-size: 1em; margin-top: 5px;">Data Period: January 2024 (31 days) | Images Loaded: 0/3</p>
+        </div>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('overview')">📊 Overview</button>
+            <button class="nav-tab" onclick="showTab('business')">💼 Business Analysis</button>
+            <button class="nav-tab" onclick="showTab('driver')">👤 Driver Income</button>
+            <button class="nav-tab" onclick="showTab('insights')">💡 Final Verdict</button>
+        </div>
+        <!-- TAB 1: OVERVIEW -->
+        <div id="overview" class="tab-content active">
+            <h2 class="section-header">📊 Dataset Overview & Statistics</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">📈 Total Records</div>
+                    <div class="metric-value">200,000</div>
+                    <div class="metric-subtext">All bookings</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">🚗 UberXL Rides</div>
+                    <div class="metric-value">28,826</div>
+                    <div class="metric-subtext">50.1% of focus data</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">🚕 Uber Go Rides</div>
+                    <div class="metric-value">28,717</div>
+                    <div class="metric-subtext">49.9% of focus data</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">⚠️ Missing Data</div>
+                    <div class="metric-value">20.9%</div>
+                    <div class="metric-subtext">751,672 missing values</div>
+                </div>
+            </div>
+        </div>
+        <!-- TAB 2: BUSINESS ANALYSIS -->
+        <div id="business" class="tab-content">
+            <h2 class="section-header">💼 Business Profitability Analysis</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                    <div class="metric-label">💰 Total Revenue</div>
+                    <div class="metric-value">₹36.25M</div>
+                    <div class="metric-subtext">Monthly revenue (31 days)</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                    <div class="metric-label">💵 Net Profit</div>
+                    <div class="metric-value">₹22.09M</div>
+                    <div class="metric-subtext">After all expenses</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                    <div class="metric-label">📊 Profit Margin</div>
+                    <div class="metric-value">60.9%</div>
+                    <div class="metric-subtext">Overall margin</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                    <div class="metric-label">💸 Lost Revenue</div>
+                    <div class="metric-value">₹0.00M</div>
+                    <div class="metric-subtext">From cancellations</div>
+                </div>
+            </div>
+            
+            <div class="section-header">📊 Client Vehicle Profitability Dashboard</div>
+            <div class="warning-box">
+                <h3>⚠️ Image Not Available</h3>
+                <p>The file 'client_profitability_dashboard.png' was not found in the current directory.</p>
+            </div>
+        
+            
+            
+            <div class="section-header">⏱️ Order Time Interval Analysis</div>
+            <div class="warning-box">
+                <h3>⚠️ Image Not Available</h3>
+                <p>The file 'order_time_interval_analysis.png' was not found in the current directory.</p>
+            </div>
+        
+        </div>
+        <!-- TAB 3: DRIVER INCOME -->
+        <div id="driver" class="tab-content">
+            <h2 class="section-header">👤 Single Driver Monthly Income Analysis</h2>
+            
+            <div class="metrics-grid">
+                <div class="metric-card" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                    <div class="metric-label">🚗 UberXL Driver</div>
+                    <div class="metric-value">₹91,246</div>
+                    <div class="metric-subtext">Monthly net income</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                    <div class="metric-label">🚕 Uber Go Driver</div>
+                    <div class="metric-value">₹178,504</div>
+                    <div class="metric-subtext">Monthly net income</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                    <div class="metric-label">📅 Daily Earnings</div>
+                    <div class="metric-value">₹6,866</div>
+                    <div class="metric-subtext">Best performer</div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                    <div class="metric-label">⏰ Hourly Rate</div>
+                    <div class="metric-value">₹687</div>
+                    <div class="metric-subtext">Best performer</div>
+                </div>
+            </div>
+            
+            <div class="section-header">📈 Single Driver Daily Earnings & Orders Analysis</div>
+            <div class="warning-box">
+                <h3>⚠️ Image Not Available</h3>
+                <p>The file 'driver_earnings_analysis.png' was not found in the current directory.</p>
+            </div>
+        
+        </div>
+        <!-- TAB 4: FINAL VERDICT -->
+        <div id="insights" class="tab-content">
+            <h2 class="section-header">🎯 Final Verdict & Recommendations</h2>
+            
+            <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 40px; border-radius: 20px; margin: 40px 0; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <h2 style="font-size: 2.5em; margin-bottom: 20px;">🏆 Winner: Uber Go</h2>
+                <p style="font-size: 1.3em; margin: 15px 0; line-height: 1.6;"><strong>Monthly Profit:</strong> ₹11414.1K vs ₹10672.1K</p>
+                <p style="font-size: 1.3em; margin: 15px 0; line-height: 1.6;"><strong>Profit Margin:</strong> 63.0% vs 58.8%</p>
+                <p style="font-size: 1.3em; margin: 15px 0; line-height: 1.6;"><strong>Best Driver Income:</strong> Uber Go (₹178,504)</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 3px solid #e0e0e0; color: #7f8c8d;">
+            <p><strong>📅 Report Generated:</strong> February 17, 2026 at 05:43 PM</p>
+            <p><strong>📊 Data Period:</strong> January 2024 (31 days)</p>
+            <p><strong>🖼️ Embedded Images:</strong> 0/3</p>
+            <p style="margin-top: 20px;">Dashboard created for business decision-making purposes</p>
+        </div>
+    </div>
+    <script>
+        function showTab(tabName) {
+            var contents = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].classList.remove('active');
+            }
+            
+            var tabs = document.getElementsByClassName('nav-tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

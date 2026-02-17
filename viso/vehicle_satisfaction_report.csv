@@ -1,0 +1,5 @@
+Vehicle Type,Avg_Driver_Rating,Avg_Customer_Rating,Low_Driver_Ratings,Low_Customer_Ratings,Rated_Rides,Low_Driver_%,Low_Customer_%
+Go Sedan,2.99,3.0,8673,8681,17752,48.86,48.9
+Non-AC Taxi,3.0,3.0,8693,8586,17709,49.09,48.48
+Uber Go,2.99,2.99,8622,8571,17507,49.25,48.96
+UberXL,3.0,3.01,8546,8624,17780,48.07,48.5
