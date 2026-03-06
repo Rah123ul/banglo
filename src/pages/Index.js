@@ -92,11 +92,11 @@ rounded-b-xl">
       </section>
 
       {/* Intro Section */}
-      <section className="py-20 px-4 bg-[#faf9f6] relative backdrop-blur-[4px]"
-      style={{
-    backgroundImage:
-      'url("https://img.pikbest.com/wp/202344/parchment-paper-vintage-horizontal-banner-texture-aged-wallpaper_9903141.jpg!sw800")',
-  }}
+      <section className="py-20 px-4 bg-[#FFF2D0] relative backdrop-blur-[4px]"
+      //style={{
+    //backgroundImage:
+      //'url("https://img.pikbest.com/wp/202344/parchment-paper-vintage-horizontal-banner-texture-aged-wallpaper_9903141.jpg!sw800")',
+  //}}
       >
         <div className="container mx-auto text-center max-w-5xl  ">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#4a1d1d]">Welcome to CIKS & SNS Club</h2>
