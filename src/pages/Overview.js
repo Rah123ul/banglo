@@ -48,38 +48,71 @@ const Overview = () => {
       <Header />
 
       <main>
-        {/* Hero Section */}
-        <section className="hero-bg-overview py-32">
-          <div className="container mx-auto px-6 text-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-[#3d405b] mb-4">
-              Centre for Indian Knowledge Systems
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
-              Home of the Science & Spirituality Club (SNS) at NIT Calicut.
-            </p>
-          </div>
-        </section>
+       
+       {/* Hero Section */}
+<section className="relative py-16 bg-gradient-to-br from-[#fdf8f3] via-[#f8ede3] to-[#fdf8f3] overflow-hidden">
 
-        {/* The Genesis of the Club */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-6 max-w-4xl text-center">
-            <h2 className="text-4xl font-bold mb-10">Our Roots & Mission</h2>
-            <div className="text-lg text-gray-800 leading-relaxed space-y-6 text-left">
-              <p>
-                The <strong>Science and Spirituality Club (SNS Club)</strong> at NIT Calicut operates under the <strong>Centre for Indian Knowledge Systems (CIKS)</strong>. Established in line with the National Education Policy 2020, CIKS serves as a bridge between the profound wisdom of traditional Indian disciplines and the rigorous inquiry of modern science.
-              </p>
-              <p>
-                Our mission is to foster a holistic educational environment. We provide students with opportunities to explore areas such as Basic Sanskrit, Indian Ethics in Management, and the scientific underpinnings of traditional lifestyles. By integrating these systems, we aim to produce technically proficient individuals with a deep sense of cultural grounding and ethical responsibility.
-              </p>
-              <p>
-                From Gita Jayanti celebrations to workshops on the Mahabharata’s relevance in business, the SNS Club is a vibrant space for dialogue, discovery, and the synthesis of different ways of knowing.
-              </p>
-            </div>
-          </div>
-        </section>
+  {/* Soft Glow Effect */}
+  <div className="absolute top-0 left-0 w-72 h-72 bg-[#be3a34]/10 rounded-full blur-3xl"></div>
+  <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#81b29a]/10 rounded-full blur-3xl"></div>
 
+  <div className="relative container mx-auto px-4 text-center">
+    <h1 className="text-4xl md:text-6xl font-bold text-[#4a1d1d] mb-6 tracking-wide leading-tight">
+      Centre for Indian Knowledge Systems
+    </h1>
+
+    <p className="text-lg md:text-2xl text-gray-700 max-w-3xl mx-auto">
+      Home of the Science & Spirituality Club (SNS) at NIT Calicut.
+    </p>
+  </div>
+</section>
+
+       {/* The Genesis of the Club */}
+<section className="py-16 bg-gradient-to-br from-[#fdf8f3] to-[#f8f4ef] relative overflow-hidden bg-[#ECE7D1]">
+
+  {/* Decorative Background Blur */}
+  <div className="absolute -top-20 -left-20 w-72 h-72 bg-[#be3a34]/10 rounded-full blur-3xl"></div>
+  <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-[#81b29a]/10 rounded-full blur-3xl"></div>
+
+  <div className="relative container mx-auto px-6 max-w-5xl">
+    
+    {/* Section Title */}
+    <div className="text-center mb-16 ">
+      <h2 className="text-4xl md:text-5xl font-bold text-[#4a1d1d] mb-4">
+        Our Roots & Mission
+      </h2>
+      <div className="w-24 h-1 bg-[#be3a34] mx-auto rounded-full"></div>
+    </div>
+
+    {/* Content Card */}
+    <div className="bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-10 md:p-14 border border-gray-100 bg-[#E6EDF9]">
+
+      <div className="space-y-8 text-lg leading-relaxed text-gray-700">
+
+        <p className="border-l-4 border-[#be3a34] pl-6">
+          The <strong>Science and Spirituality Club (SNS Club)</strong> at NIT Calicut operates under the 
+          <strong> Centre for Indian Knowledge Systems (CIKS)</strong>. Established in line with the 
+          National Education Policy 2020, CIKS bridges traditional Indian wisdom with modern scientific inquiry.
+        </p>
+
+        <p>
+          Our mission is to cultivate a holistic educational environment where students explore 
+          Basic Sanskrit, Indian Ethics in Management, and scientific foundations of traditional lifestyles.
+          We aim to produce technically proficient individuals grounded in cultural awareness and ethical responsibility.
+        </p>
+
+        <p className="italic text-[#4a1d1d]">
+          From Gita Jayanti celebrations to Mahabharata-inspired workshops, the SNS Club fosters 
+          dialogue, discovery, and the synthesis of diverse ways of knowing.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
         {/* Our Core Philosophy */}
-        <section className="py-24 bg-gray-50">
+        <section className="py-24 bg-gray-50 bg-[#FFF4EB]
+">
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-4xl font-bold mb-12">Our Core Principles</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto">
@@ -96,50 +129,126 @@ const Overview = () => {
           </div>
         </section>
 
-        {/* Leadership Section */}
-        <section className="py-24 bg-white">
-          <div className="container mx-auto px-6 max-w-4xl">
-            <h2 className="text-4xl font-bold text-center mb-16">Leadership & Guidance</h2>
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="text-center">
-                <div className="w-40 h-40 bg-gray-200 rounded-full mx-auto mb-6 overflow-hidden">
-                  <img src="https://placehold.co/400x400/3d405b/ffffff?text=Dr.+Sanjeev" alt="Dr. Sanjeev Kumar Manjhi" className="w-full h-full object-cover" />
-                </div>
-                <h3 className="text-2xl font-bold text-[#4a1d1d]">Dr. Sanjeev Kumar Manjhi</h3>
-                <p className="text-[#be3a34] font-medium">Faculty Coordinator, SNS Club</p>
-                <p className="text-gray-600 text-sm mt-4">
-                  Dr. Manjhi has been instrumental in establishing the club and guiding its activities toward a meaningful synthesis of science and spirituality.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-40 h-40 bg-gray-200 rounded-full mx-auto mb-6 overflow-hidden">
-                  <img src="https://placehold.co/400x400/4a1d1d/ffffff?text=Dr.+Sridharan" alt="Dr. R. Sridharan" className="w-full h-full object-cover" />
-                </div>
-                <h3 className="text-2xl font-bold text-[#4a1d1d]">Dr. R. Sridharan</h3>
-                <p className="text-[#be3a34] font-medium">Chairperson, CIKS</p>
-                <p className="text-gray-600 text-sm mt-4">
-                  A Professor in Mechanical Engineering, Dr. Sridharan also chairs the Vivekananda Study Circle, fostering a culture of holistic growth.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Leadership Section - Modern Minimal Layout */}
+<section className="py-24 bg-[#FBEFEF]">
+  <div className="container mx-auto px-6 max-w-6xl">
 
-        {/* Join Us CTA */}
-        <section id="join" className="py-24 bg-[#3d405b]">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-4xl font-bold text-white mb-4">Start Your Journey of Inquiry</h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-              Join a community that values both the experimental and the experiential. Broaden your outlook and discover the richness of our shared heritage.
-            </p>
-            <Link
-              to="/events"
-              className="inline-block bg-[#81b29a] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6a9e87] transition-colors"
-            >
-              Explore Our Events
-            </Link>
-          </div>
-        </section>
+    {/* Title */}
+    <div className="text-center mb-20">
+      <h2 className="text-4xl md:text-5xl font-bold text-[#4a1d1d]">
+        Leadership & <span className="italic text-[#be3a34]">Guidance</span>
+      </h2>
+      <div className="w-20 h-[3px] bg-[#be3a34] mx-auto mt-4"></div>
+    </div>
+
+    {/* Profile 1 */}
+    <div className="flex flex-col md:flex-row items-center gap-12 mb-20">
+
+      <div className="w-44 h-44 flex-shrink-0">
+        <img
+          src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=VB01MaEAAAAJ&citpid=1"
+          
+          alt="Dr. Ashish Awasthi"
+          className="w-full h-full object-cover rounded-full border-4 border-[#be3a34]/30"
+        />
+      </div>
+
+      <div className="text-center md:text-left">
+        <h3 className="text-3xl font-bold text-[#4a1d1d]">
+          Dr. Ashish Awasthi
+        </h3>
+        <p className="text-[#be3a34] font-semibold mt-2">
+          Faculty Coordinator, SNS Club
+        </p>
+        <p className="text-gray-700 mt-4 leading-relaxed max-w-2xl">
+         A Professor in Mathematics Department ,  Dr. Ashish Awasthi also chairs the Vivekananda Study Circle, fostering a culture of holistic growth.
+        </p>
+      </div>
+
+    </div>
+
+    {/* Divider Line */}
+    <div className="h-px bg-[#be3a34]/20 my-16"></div>
+
+    {/* Profile 2 */}
+    <div className="flex flex-col md:flex-row-reverse items-center gap-12">
+
+      <div className="w-44 h-44 flex-shrink-0">
+        <img
+          src="https://nitc.ac.in/imgserver/uploads/attachments/pcm__f1e96008-4181-4d3e-9494-2adafe8178f4_0.png"
+          
+          alt="Dr. Prateek Negi"
+          className="w-full h-full object-cover rounded-full border-4 border-[#be3a34]/30"
+        />
+      </div>
+
+      <div className="text-center md:text-right ">
+        <h3 className="text-3xl font-bold text-[#4a1d1d]">
+          Dr. Prateek Negi
+        </h3>
+        <p className="text-[#be3a34] font-semibold mt-2">
+          Faculty Coordinator, SNS Club
+        </p>
+        <p className="text-gray-700 mt-4 leading-relaxed max-w-2xl">
+          Dr. Prateek Negi has been instrumental in establishing the club and guiding its activities toward a meaningful synthesis of science and spirituality.
+        </p>
+      </div>
+
+    </div>
+
+    {/* Divider Line */}
+    <div className="h-px bg-[#be3a34]/20 my-16"></div>
+
+    {/* Profile 3 */}
+    <div className="flex flex-col md:flex-row items-center gap-12 mb-20">
+
+      <div className="w-44 h-44 flex-shrink-0">
+        <img
+          src="https://nitc.ac.in/imgserver/uploads/attachments/pcm__26b5b380-3fa1-4542-a24e-a8b6432e1ab1_0.png"
+          alt="Dr. Devesh Shukla"
+          className="w-full h-full object-cover rounded-full border-4 border-[#be3a34]/30"
+        />
+      </div>
+
+      <div className="text-center md:text-left">
+        <h3 className="text-3xl font-bold text-[#4a1d1d]">
+          Dr. Devesh Shukla
+        </h3>
+        <p className="text-[#be3a34] font-semibold mt-2">
+          Faculty Coordinator, SNS Club
+        </p>
+        <p className="text-gray-700 mt-4 leading-relaxed max-w-2xl">
+          Dr. Devesh Shukla has been instrumental in establishing the club and guiding its activities toward a meaningful synthesis of science and spirituality.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+       {/* Join Us CTA */}
+<section id="join" className="py-24 bg-[#FAEDD2]">
+  <div className="container mx-auto px-6 text-center">
+    
+    <h2 className="text-4xl font-bold text-[#4a1d1d] mb-4">
+      Start Your Journey of Inquiry
+    </h2>
+
+    <p className="text-xl text-[#5a3e2b] max-w-2xl mx-auto mb-8 leading-relaxed">
+      Join a community that values both the experimental and the experiential.
+      Broaden your outlook and discover the richness of our shared heritage.
+    </p>
+
+    <Link
+      to="/events"
+      className="inline-block bg-[#81b29a] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#6a9e87] transition-all duration-300 shadow-md hover:shadow-lg"
+    >
+      Explore Our Events
+    </Link>
+
+  </div>
+</section>
       </main>
 
       <Footer />

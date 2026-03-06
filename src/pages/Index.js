@@ -35,7 +35,7 @@ const Index = () => {
       <Header />
 
       {/* Hero Section / Video Slider */}
-      <section className="relative h-[500px] md:h-[540px] w-full overflow-hidden bg-gray-100 group">
+      <section className="relative h-[500px] md:h-[600px] w-full overflow-hidden bg-gray-100 group">
         <div id="video-slider" className="relative w-full h-full">
           {videos.map((video, index) => (
             <div
@@ -107,24 +107,46 @@ rounded-b-xl">
             of traditional wisdom and modern science.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-            {[
-              { title: 'IKS Research', desc: 'Investigating ancient Indian sciences with modern validation.', icon: '🔬', color: 'bg-red-50 text-[#be3a34]' },
-              { title: 'Ethos & Values', desc: 'Promoting Indian ethics in management and lifestyle.', icon: '📜', color: 'bg-yellow-50 text-[#4a1d1d]' },
-              { title: 'Seva (Service)', desc: 'Cultivating a spirit of service and community welfare.', icon: '🤝', color: 'bg-green-50 text-green-700' }
-            ].map((card, i) => (
-              <div key={i} className="card p-8 bg-white border border-gray-100 hover:border-[#be3a34]/30 group transition-all shadow-sm hover:shadow-md">
-                <div className={`w-16 h-16 ${card.color} rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform`}>
-                  {card.icon}
-                </div>
-                <h4 className="text-xl font-bold text-[#4a1d1d] mb-3">{card.title}</h4>
-                <p className="text-gray-500 leading-relaxed mb-4">{card.desc}</p>
-                <Link to="/overview" className="text-[#be3a34] font-semibold hover:text-[#4a1d1d] inline-flex items-center gap-1 group-hover:gap-2 transition-all">
-                  Learn more <span>&rarr;</span>
-                </Link>
-              </div>
-            ))}
-          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+
+  {[
+    { title: 'IKS Research', desc: 'Investigating ancient Indian sciences with modern validation.' },
+    { title: 'Ethos & Values', desc: 'Promoting Indian ethics in management and lifestyle.' },
+    { title: 'Seva (Service)', desc: 'Cultivating a spirit of service and community welfare.' }
+  ].map((book, i) => (
+
+    <div key={i} className="relative flex justify-center bg-transparent">
+
+      <img
+        src={process.env.PUBLIC_URL + "/sticky.png"}
+        alt="Open Book"
+        className="w-[420px] object-contain"
+      />
+
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-16 text-center">
+
+        <h3 className="text-2xl font-bold text-[#3b2a1a] mb-4">
+          {book.title}
+        </h3>
+
+        <p className="text-gray-600 text-lg mb-6">
+          {book.desc}
+        </p>
+
+        <Link
+          to="/overview"
+          className="text-[#be3a34] font-semibold text-lg hover:text-[#4a1d1d]"
+        >
+          Learn More →
+        </Link>
+
+      </div>
+
+    </div>
+
+  ))}
+
+</div>
         </div>
       </section>
 <Footer />

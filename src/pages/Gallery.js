@@ -1,36 +1,40 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 const Gallery = () => {
   const galleryImages = [
+    
     {
-      src: 'https://placehold.co/600x400/4a1d1d/ffffff?text=Traditional+Knowledge+Conference',
-      alt: 'Participants at the International Conference on BTKS.',
-      caption: 'International Conference on Bhartiya Traditional Knowledge System.'
-    },
+  src: process.env.PUBLIC_URL + "/btks.jpg",
+  alt: "Participants at the International Conference on BTKS.",
+  caption: "International Conference on Bhartiya Traditional Knowledge System."
+},
     {
-      src: 'https://placehold.co/600x400/be3a34/ffffff?text=Sanskrit+Orientation',
+      src: process.env.PUBLIC_URL + "/sanskrit.jpg",
       alt: 'Students attending a Sanskrit orientation session.',
       caption: 'Ten Day Sanskrit Orientation Programme (Samskrita Sambhashana Shibhiram).'
     },
-    {
+
+    
+    /*{
       src: 'https://placehold.co/600x400/4a1d1d/ffffff?text=National+Youth+Day',
       alt: 'Youth Day celebrations at NIT Calicut.',
       caption: 'Celebrating the ideals of Swami Vivekananda on National Youth Day.'
     },
-    {
+    /*{
       src: 'https://placehold.co/600x400/be3a34/ffffff?text=NMC+Header+Design',
       alt: 'Visual representation of the new website header design.',
       caption: 'Adopting the "National Mission for Manuscripts" aesthetic for CIKS.'
-    },
-    {
+    },*/
+    /*{
       src: 'https://placehold.co/600x400/4a1d1d/ffffff?text=Meditation+Circle',
       alt: 'Weekly meditation gathering.',
       caption: 'Finding inner stillness during our weekly meditation sessions.'
-    },
+    },*/
     {
-      src: 'https://placehold.co/600x400/be3a34/ffffff?text=IKS+Dialogue',
+      src: process.env.PUBLIC_URL + "/somnath.jpg",
       alt: 'Experts discussing interdisciplinary synthesis.',
       caption: 'Promoting interdisciplinary dialogue between science and spirituality.'
     }
@@ -42,7 +46,7 @@ const Gallery = () => {
 
       <main>
         {/* Hero Section */}
-        <section className="hero-bg-gallery py-32">
+        <section className="hero-bg-gallery py-20 relative ">
           <div className="container mx-auto px-6 text-center">
             <h1 className="text-5xl md:text-7xl font-bold text-[#4a1d1d] mb-4">
               Legacy in Focus.

@@ -1,213 +1,208 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatDate = (date) => {
-    return date.toLocaleDateString('en-GB', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
-  };
-
-  const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-    }) + ' IST';
-  };
+  const shlokas = [
+    '✦  विद्या ददाति विनयम्  ✦',
+    'सा विद्या या विमुक्तये',
+    '✦  तमसो मा ज्योतिर्गमय  ✦',
+    'आ नो भद्राः क्रतवो यन्तु विश्वतः',
+    '✦  ज्ञानं परमं ध्येयम्  ✦',
+    'सर्वे भवन्तु सुखिनः',
+    '✦  योगः कर्मसु कौशलम्  ✦',
+    'एकं सद् विप्रा बहुधा वदन्ति',
+  ];
 
   return (
     <div className="flex flex-col w-full font-sans">
-      {/* Top Bar - Dark Maroon */}
-      <div className="bg-[#4a1d1d] text-white text-xs py-1 px-4 md:px-8 flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <span>{formatDate(currentTime)} | {formatTime(currentTime)}</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="hidden md:inline cursor-pointer hover:underline">Screen Reader Access</span>
-          <span className="hidden md:inline">|</span>
-          <span className="cursor-pointer hover:underline">Skip to main content</span>
-          <span className="hidden md:inline">|</span>
-          <div className="flex gap-2">
-            <span className="cursor-pointer hover:text-gray-300 font-bold">A-</span>
-            <span className="cursor-pointer hover:text-gray-300 font-bold">A</span>
-            <span className="cursor-pointer hover:text-gray-300 font-bold">A+</span>
-          </div>
-          <span className="hidden md:inline">|</span>
-          <div className="flex gap-2">
-            <i className="fab fa-facebook-f cursor-pointer hover:text-gray-300"></i>
-            <i className="fab fa-twitter cursor-pointer hover:text-gray-300"></i>
-            <i className="fab fa-youtube cursor-pointer hover:text-gray-300"></i>
-          </div>
-        </div>
-      </div>
 
-     {/* Main Banner - Aged Paper Background */}
-<div
-  className="relative py-6 px-4 md:px-8 
-  flex items-center justify-between 
-  shadow-md overflow-hidden bg-cover bg-center"
-  style={{
-    backgroundImage:
-      'url("https://img.pikbest.com/wp/202344/parchment-paper-vintage-horizontal-banner-texture-aged-wallpaper_9903141.jpg!sw800")'
-  }}
->
+      {/* ── Top Bar ── */}
+      
+      {/* ── Main Banner ── */}
+      <div
+        className="relative shadow-md overflow-hidden bg-cover bg-center"
+        style={{
+          backgroundImage:
+            'url("https://i.pinimg.com/736x/c5/d6/ff/c5d6ff1c56757b472c898d7de3698e8f.jpg")',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/48 pointer-events-none" />
 
-  {/* Dark Overlay */}
-  <div className="absolute inset-0 bg-black/40 pointer-events-none"></div>
+        {/* 3-Column Grid */}
+        <div className="relative z-10 grid grid-cols-[auto_1fr_auto] items-center w-full px-5 md:px-10 py-3 md:py-3.5 gap-2">
 
-  {/* Left - SNS Logo */}
-  <div className="relative z-10 flex items-center">
-    
-    <img
-      src="/snslogo.png"  // 👈 Put your uploaded SNS image in public folder and name it sns-logo.png
-      alt="SNS Logo"
-      className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-xl"
-    />
-     <h1 className="text-2xl md:text-3xl font-bold tracking-wide uppercase drop-shadow-lg text-white">
+          {/* LEFT — SNS Club */}
+          
+<Link to="/" className="flex items-center gap-3">
+  <img
+    src={process.env.PUBLIC_URL + "/snslogo.png"}
+    alt="SNS Club Logo"
+    className="w-10 h-10 md:w-[54px] md:h-[54px] object-contain drop-shadow-xl flex-shrink-0"
+  />
+  <div className="flex flex-col leading-tight">
+    <span className="text-white text-xs md:text-sm font-extrabold tracking-widest uppercase drop-shadow">
       SNS Club
-    </h1>
+    </span>
   </div>
+</Link>
 
-  {/* Center Text */}
-  <div className="relative z-10 text-center flex flex-col items-center">
-    
-    <h2 className="text-sm md:text-lg font-medium opacity-95 tracking-wider text-white">
-      National Institute of Technology Calicut
-    </h2>
-    <div className="h-0.5 w-24 bg-white/70 mt-2"></div>
-    <p className="text-xs md:text-sm mt-1 italic opacity-90 text-white">
-      Bridging Science & Spirituality
-    </p>
-  </div>
+          {/* CENTER — empty / spacer */}
+          <div />
 
-  {/* Right - NITC Logo */}
-  <div className="relative z-10 flex items-center">
-    <img
-      src="https://nitc.ac.in/xc-assets/logo/nitc_logo_icon.svg"
-      alt="NITC Logo"
-      className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full p-2 shadow-lg"
-    />
-  </div>
-
-</div>
-
-
-
-
-      {/* Navigation Bar - Dark Brown/Black */}
-      <nav className="bg-[#2d1b1b] text-white border-t-4 border-[#d4af37] shadow-lg sticky top-0 z-50 ">
-        <div className="container mx-auto px-4 md:px-8">
-          <ul className="flex flex-wrap items-center justify-center gap-px">
-            {[
-              { name: 'HOME', path: '/home' },
-              { name: 'ABOUT US', path: '/overview' },
-              { name: 'SCIENCE', path: '/science' },
-              { name: 'SPIRITUALITY', path: '/spirituality' },
-              { name: 'GALLERY', path: '/gallery' },
-              { name: 'EVENTS', path: '/events' },
-              
-              
-            ].map((item, index) => (
-              <li key={index} className="flex-1 md:flex-none">
-                <Link
-                  to={item.path}
-                  className="block py-3 px-6 text-sm font-bold tracking-wider hover:bg-[#3e2a2a] transition-colors border-r border-[#3e2a2a]/30 uppercase text-center"
-                >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
-
-      {/* Decorative Vedic Manuscript Banner - 4th Row */}
-      <div className="bg-[#4a1d1d] border-t-2 border-[#d4af37] shadow-inner">
-        <div className="container mx-auto relative h-24 md:h-16 overflow-hidden">
-          <div className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6gfc--q5IzHZRc9mZAuVOwvKfC9i4hnby7A&s")' }}></div>
-
-          <div className="flex h-full w-full items-center justify-around gap-2 px-2">
-            {/* Panel 1: Devanagari Manuscript */}
-            <div className="h-full flex-1 min-w-[150px] relative transition-transform hover:scale-105 duration-500">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsMGRQkomb_npYiw0_keIHUSIW-x2I6hdWCA&s"
-                alt="Devanagari Script"
-                className="w-full h-full object-cover opacity-90 border-x border-[#d4af37]/20"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#4a1d1d]/60 to-transparent"></div>
+          {/* RIGHT — NIT Calicut */}
+          <div className="flex items-center gap-3 justify-end">
+            <div className="flex-col items-end leading-snug hidden sm:flex">
+              <h2 className="text-white sm:text-[10px] md:text-xs font-medium tracking-widest uppercase drop-shadow">
+                National Institute of Technology Calicut
+              </h2>
             </div>
-
-            {/* Panel 2: Palm Leaf Manuscript Style */}
-            <div className="h-full flex-1 min-w-[150px] relative hidden sm:block overflow-hidden transition-transform hover:scale-105 duration-500">
-              <div className="absolute inset-0 bg-[#be3a34] opacity-20"></div>
-              <img
-                src="https://www.kamat.com/database/pictures/5421.jpg"
-                alt="Palm Leaf Manuscript"
-                className="w-full h-full object-cover opacity-80 mix-blend-screen grayscale brightness-125 saturate-50"
-                onError={(e) => { e.target.src = 'https://www.transparenttextures.com/patterns/natural-paper.png'; }}
-              />
-            </div>
-
-{/* Panel 2: Palm Leaf Manuscript Style */}
-            <div className="h-full flex-1 min-w-[150px] relative hidden sm:block overflow-hidden transition-transform hover:scale-105 duration-500">
-              <div className="absolute inset-0 bg-[#be3a34] opacity-20"></div>
-              <img
-                src="https://thediplomat.com/wp-content/uploads/2015/09/sizes/td-story-s-2/thediplomat_2015-09-03_00-42-20.jpg"
-                alt="Palm Leaf Manuscript"
-                className="w-full h-full object-cover opacity-80 mix-blend-screen grayscale brightness-125 saturate-50"
-                onError={(e) => { e.target.src = 'https://www.transparenttextures.com/patterns/natural-paper.png'; }}
-              />
-            </div>
-
-            {/* Panel 2: Palm Leaf Manuscript Style */}
-            <div className="h-full flex-1 min-w-[150px] relative hidden sm:block overflow-hidden transition-transform hover:scale-105 duration-500">
-              <div className="absolute inset-0 bg-[#be3a34] opacity-20"></div>
-              <img
-                src="https://www.kamat.com/database/pictures/5421.jpg"
-                alt="Palm Leaf Manuscript"
-                className="w-full h-full object-cover opacity-80 mix-blend-screen grayscale brightness-125 saturate-50"
-                onError={(e) => { e.target.src = 'https://www.transparenttextures.com/patterns/natural-paper.png'; }}
-              />
-            </div>
-
-            {/* Panel 2: Palm Leaf Manuscript Style */}
-            <div className="h-full flex-1 min-w-[150px] relative hidden sm:block overflow-hidden transition-transform hover:scale-105 duration-500">
-              <div className="absolute inset-0 bg-[#be3a34] opacity-20"></div>
-              <img
-                src="https://cdn.britannica.com/20/256720-050-36A1DDE8/Devanagari-script-Bhagavata-Purana.jpg?w=400&h=300&c=crop"
-                alt="Palm Leaf Manuscript"
-                className="w-full h-full object-cover opacity-80 mix-blend-screen grayscale brightness-125 saturate-50"
-                onError={(e) => { e.target.src = 'https://www.transparenttextures.com/patterns/natural-paper.png'; }}
-              />
-            </div>
-            
-            {/* Panel 4: Vedic miniature/Art style */}
-            <div className="h-full flex-1 min-w-[150px] relative hidden lg:block transition-transform hover:scale-105 duration-500">
-              <img
-                src="https://thumbs.dreamstime.com/b/sanskrit-sentence-mantra-avalokitesvara-bodhisattva-buddhism-one-ancient-indian-also-language-49993927.jpg"
-                alt="Vedic Script"
-                className="w-full h-full object-cover opacity-80"
-                onError={(e) => { e.target.style.display = 'none'; }}
-              />
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#4a1d1d] to-transparent"></div>
-            </div>
+            <img
+              src={process.env.PUBLIC_URL + "/nit_logo.png"}
+              alt="NIT Calicut Logo"
+              className="w-10 h-10 md:w-[54px] md:h-[54px] object-contain drop-shadow-2xl flex-shrink-0"
+            />
           </div>
 
-          {/* Decorative Gold Flourish on top */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent opacity-50"></div>
         </div>
+
+        {/* Gold bottom accent */}
+        <div className="relative z-10 h-[3px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent" />
       </div>
+
+      {/* ── Navigation Bar ── */}
+<nav className="bg-[#2d1b1b] text-white border-t-4 border-[#d4af37] shadow-lg sticky top-0 z-50">
+  <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
+    
+    {/* Mobile Menu Button */}
+    <button
+      className="md:hidden p-2 text-white z-50"
+      aria-label="Toggle navigation"
+      onClick={() => setMenuOpen(prev => !prev)}
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+        />
+      </svg>
+    </button>
+
+    {/* Overlay (Mobile Only) */}
+    {menuOpen && (
+      <div
+        className="fixed inset-0 bg-black/50 z-40 md:hidden"
+        onClick={() => setMenuOpen(false)}
+      ></div>
+    )}
+
+    {/* Navigation Links */}
+   <ul
+  className={`
+    fixed top-0 left-0 h-full w-64 bg-[#2d1b1b] flex flex-col
+    transform transition-transform duration-300 z-50
+    ${menuOpen ? "translate-x-0" : "-translate-x-full"}
+    md:static md:translate-x-0 md:flex md:flex-row md:h-auto md:w-auto
+    md:items-center md:justify-center md:gap-px
+  `}
+>
+  {/* ❌ Close Button (Mobile Only) */}
+  <div className="flex justify-end p-4 md:hidden">
+    <button
+      onClick={() => setMenuOpen(false)}
+      className="text-white text-2xl hover:text-[#d4af37] transition-colors"
+    >
+      ✕
+    </button>
+  </div>
+
+  {[
+    
+    { name: 'FOUNDER', path: '/founder' },
+    { name: 'SCIENCE', path: '/science' },
+    { name: 'SPIRITUALITY', path: '/spirituality' },
+    { name: 'GALLERY', path: '/gallery' },
+   
+    { name: 'ABOUT US', path: '/overview' },
+    { name: 'EVENTS', path: '/events' },
+    
+  ].map((item, i) => (
+    <li key={i}>
+      <Link
+        to={item.path}
+        onClick={() => setMenuOpen(false)}
+        className="
+          block py-4 px-6 text-sm font-bold tracking-wider uppercase
+          border-b border-[#3e2a2a]/40
+          hover:bg-[#3e2a2a] transition-colors
+          md:border-b-0 md:border-r md:py-3
+        "
+      >
+        {item.name}
+      </Link>
+    </li>
+  ))}
+</ul>
+  </div>
+</nav>
+
+      {/* ── Creative Sanskrit Ticker Strip ── */}
+      <div
+        className="relative overflow-hidden border-b-2 border-[#d4af37]/50"
+        style={{
+          background: 'linear-gradient(90deg, #1a0808 0%, #3b1010 30%, #4a1d1d 50%, #3b1010 70%, #1a0808 100%)',
+          minHeight: '46px',
+        }}
+      >
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/old-mathematics.png")' }}
+        />
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent opacity-70" />
+
+        <div className="absolute left-0 top-0 h-full w-12 z-10 flex items-center justify-center"
+             style={{ background: 'linear-gradient(to right, #1a0808 60%, transparent)' }}>
+          <span className="text-[#d4af37] text-base select-none">❖</span>
+        </div>
+        <div className="absolute right-0 top-0 h-full w-12 z-10 flex items-center justify-center"
+             style={{ background: 'linear-gradient(to left, #1a0808 60%, transparent)' }}>
+          <span className="text-[#d4af37] text-base select-none">❖</span>
+        </div>
+
+        <div className="flex items-center h-full py-2 px-12 overflow-hidden">
+          <style>{`
+            @keyframes snsTickerAnim {
+              0%   { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+            }
+            .sns-ticker {
+              display: flex;
+              white-space: nowrap;
+              animation: snsTickerAnim 28s linear infinite;
+            }
+            .sns-ticker:hover { animation-play-state: paused; }
+          `}</style>
+          <div className="sns-ticker">
+            {[...shlokas, ...shlokas].map((s, i) => (
+              <span key={i} className="inline-flex items-center gap-3 px-5">
+                <span
+                  className="text-[#f5d87a] text-sm md:text-base font-semibold tracking-widest"
+                  style={{ fontFamily: '"Noto Serif Devanagari", "Mangal", serif', textShadow: '0 0 8px rgba(212,175,55,0.4)' }}
+                >
+                  {s}
+                </span>
+                <span className="text-[#d4af37]/30 text-xs">◆</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent opacity-70" />
+      </div>
+
     </div>
   );
 };

@@ -28,10 +28,10 @@ const Science = () => {
 
       <main className="relative z-10">
         {/* Hero Section */}
-        <section className="hero-bg-science py-32 relative">
+        <section className="hero-bg-science py-20 relative">
           <div className="absolute inset-0 bg-[#f4e4c1] opacity-30"></div>
           <div className="container mx-auto px-6 text-center relative z-10">
-            <h1 className="text-5xl md:text-7xl font-bold text-[#4a1d1d] mb-4">
+            <h1 className="text-4xl md:text-5xl font-semibold text-[#4a1d1d] mb-4">
               Vigyan: Where Ancient Wisdom Meets Modern Inquiry
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
@@ -41,7 +41,7 @@ const Science = () => {
         </section>
 
         {/* Introduction to IKS */}
-        <section className="py-20 bg-[#faf6ed] relative">
+        <section className="py-16 bg-[#ECE7D1] relative">
           <div className="absolute inset-0 opacity-5" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`
           }}></div>
@@ -70,38 +70,62 @@ const Science = () => {
               Each field represents centuries of observation, experimentation, and philosophical inquiry—all waiting to be explored through both traditional and contemporary lenses.
             </p>
             
-            {/* Field 1: Mathematics - Full Width Banner Style */}
-            <div className="mb-12 relative h-[400px] rounded-2xl overflow-hidden shadow-2xl group">
-              <div 
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{
-                  backgroundImage: `url("https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&q=80")`,
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-transparent"></div>
-              <div className="absolute inset-0 opacity-20" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='1'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
-              }}></div>
-              <div className="relative h-full flex items-center px-12">
-                <div className="max-w-2xl">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="bg-[#f2cc8f] p-5 rounded-full text-[#4a1d1d] shadow-xl">
-                      <span className="text-5xl font-bold">०</span>
-                    </div>
-                    <div>
-                      <h3 className="text-4xl font-bold text-white mb-1">Gaṇita</h3>
-                      <p className="text-xl text-[#f2cc8f] italic">The Mathematics of Infinity</p>
-                    </div>
-                  </div>
-                  <p className="text-white/90 leading-relaxed text-lg mb-4">
-                    When Brahmagupta wrote his <span className="italic font-semibold">Brāhmasphuṭasiddhānta</span> in 628 CE, he wasn't just doing math—he was revolutionizing how humanity thinks about numbers. His rules for zero and negative numbers would eventually transform global commerce and scientific calculation.
-                  </p>
-                  <p className="text-white/80 leading-relaxed">
-                    We explore: How did algebraic thinking emerge from Sanskrit grammatical traditions? Why did Indian mathematicians see infinity as a number? What can <span className="italic">Vedic Mathematics</span> teach us about computational thinking?
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Field 1: Mathematics - Responsive Banner */}
+<div className="mb-12 relative min-h-[480px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl group">
+
+  {/* Background Image */}
+  <div 
+    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+    style={{
+      backgroundImage: `url("https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&q=80")`,
+    }}
+  />
+
+  {/* Gradient Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/75 to-transparent"></div>
+
+  {/* Paper Texture */}
+  <div
+    className="absolute inset-0 opacity-10"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='1'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
+    }}
+  ></div>
+
+  {/* Content */}
+  <div className="relative h-full flex items-center py-10">
+    <div className="max-w-2xl px-6 md:px-12">
+
+      {/* Heading Row */}
+      <div className="flex items-center gap-4 mb-6">
+
+        <div className="bg-[#f2cc8f] p-4 md:p-5 rounded-full text-[#4a1d1d] shadow-xl flex-shrink-0">
+          <span className="text-3xl md:text-5xl font-bold">०</span>
+        </div>
+
+        <div>
+          <h3 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+            Gaṇita
+          </h3>
+          <p className="text-sm md:text-xl text-[#f2cc8f] italic">
+            The Mathematics of Infinity
+          </p>
+        </div>
+
+      </div>
+
+      {/* Description */}
+      <p className="text-white/90 leading-relaxed text-sm md:text-lg mb-4">
+        When Brahmagupta wrote his <span className="italic font-semibold">Brāhmasphuṭasiddhānta</span> in 628 CE, he wasn't just doing math—he was revolutionizing how humanity thinks about numbers. His rules for zero and negative numbers would eventually transform global commerce and scientific calculation.
+      </p>
+
+      <p className="text-white/80 leading-relaxed text-sm md:text-base">
+        We explore: How did algebraic thinking emerge from Sanskrit grammatical traditions? Why did Indian mathematicians see infinity as a number? What can <span className="italic">Vedic Mathematics</span> teach us about computational thinking?
+      </p>
+
+    </div>
+  </div>
+</div>
 
             {/* Fields 2 & 3: Side by Side Cards */}
             <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -163,7 +187,7 @@ const Science = () => {
                       <p className="text-lg text-[#f2cc8f] italic">The Science of Life</p>
                     </div>
                   </div>
-                  <p className="text-white/90 leading-relaxed mb-3">
+                  <p className="text-white/100 leading-relaxed mb-3">
                     Suśruta was performing cataract surgery and plastic reconstruction in 600 BCE. Caraka documented over 2,000 disease classifications. But <span className="italic">Āyurveda</span> was never just about treatment—it was about understanding the fundamental relationship between body, mind, and environment.
                   </p>
                   <p className="text-white/80 leading-relaxed text-sm">
@@ -173,45 +197,71 @@ const Science = () => {
               </div>
             </div>
 
-            {/* Field 4: Sustainability - Diagonal Split Layout */}
-            <div className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl group">
-              <div 
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{
-                  backgroundImage: `url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80")`,
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#2d5016]/90 via-[#2d5016]/75 to-transparent"></div>
-              <div className="absolute inset-0 opacity-20" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
-              }}></div>
-              <div className="relative h-full flex items-center">
-                <div className="w-full md:w-2/3 px-12">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="bg-[#f2cc8f] p-5 rounded-full text-[#2d5016] shadow-xl">
-                      <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-4xl font-bold text-white mb-1">Prakṛti-Vijñāna</h3>
-                      <p className="text-xl text-[#f2cc8f] italic">Understanding Nature's Intelligence</p>
-                    </div>
-                  </div>
-                  <p className="text-white/90 leading-relaxed text-lg mb-4">
-                    Ancient Indian texts didn't just describe nature—they prescribed a relationship with it. The concept of <span className="italic font-semibold">ṛta</span> (cosmic order) meant that ecological balance wasn't optional; it was fundamental. Traditional stepwells, <span className="italic">vāstu</span> architecture, and community forest management weren't just practical—they were expressions of a worldview.
-                  </p>
-                  <p className="text-white/80 leading-relaxed">
-                    We examine: How traditional water harvesting systems can address modern scarcity, the biodiversity wisdom in <span className="italic">vana</span> (forest) management, and climate-responsive architecture principles from <span className="italic">Vāstu Śāstra</span>.
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Field 4: Sustainability - Responsive Layout */}
+<div className="relative min-h-[500px] md:h-[450px] rounded-2xl overflow-hidden shadow-2xl group">
+
+  {/* Background Image */}
+  <div 
+    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+    style={{
+      backgroundImage: `url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80")`,
+    }}
+  />
+
+  {/* Gradient Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-br from-[#2d5016]/95 via-[#2d5016]/85 to-transparent"></div>
+
+  {/* Paper Texture */}
+  <div
+    className="absolute inset-0 opacity-10"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
+    }}
+  ></div>
+
+  {/* Content */}
+  <div className="relative h-full flex items-center py-10">
+    <div className="w-full md:w-2/3 px-6 md:px-12">
+
+      {/* Heading Row */}
+      <div className="flex items-center gap-4 mb-6">
+
+        {/* Icon */}
+        <div className="bg-[#f2cc8f] p-4 md:p-5 rounded-full text-[#2d5016] shadow-xl flex-shrink-0">
+          <svg className="w-8 h-8 md:w-12 md:h-12" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+          </svg>
+        </div>
+
+        {/* Title */}
+        <div>
+          <h3 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+            Prakṛti-Vijñāna
+          </h3>
+          <p className="text-sm md:text-xl text-[#f2cc8f] italic">
+            Understanding Nature's Intelligence
+          </p>
+        </div>
+
+      </div>
+
+      {/* Description */}
+      <p className="text-white/100 leading-relaxed text-sm md:text-lg mb-4">
+        Ancient Indian texts didn't just describe nature—they prescribed a relationship with it. The concept of <span className="italic font-semibold">ṛta</span> (cosmic order) meant that ecological balance wasn't optional; it was fundamental. Traditional stepwells, <span className="italic">vāstu</span> architecture, and community forest management weren't just practical—they were expressions of a worldview.
+      </p>
+
+      <p className="text-white/80 leading-relaxed text-sm md:text-base">
+        We examine: How traditional water harvesting systems can address modern scarcity, the biodiversity wisdom in <span className="italic">vana</span> management, and climate-responsive architecture principles from <span className="italic">Vāstu Śāstra</span>.
+      </p>
+
+    </div>
+  </div>
+</div>
           </div>
         </section>
 
         {/* Deep Dive Section */}
-        <section className="py-20 bg-[#faf6ed] relative">
+        <section className="py-20 bg-[#F9DFDF] relative">
           <div className="absolute inset-0 opacity-5" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`
           }}></div>
@@ -238,54 +288,21 @@ const Science = () => {
         </section>
 
         {/* Wisdom Banner */}
-        <section className="bg-[#4a1d1d] py-24 text-white relative">
+        <section className=" py-24 bg-[#FAEDD2]">
           <div className="absolute inset-0 opacity-10" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.5' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.6'/%3E%3C/svg%3E")`
           }}></div>
           <div className="container mx-auto px-6 text-center relative z-10">
-            <blockquote className="text-3xl md:text-4xl font-serif italic max-w-4xl mx-auto mb-6">
+            <blockquote className="text-3xl md:text-4xl font-serif italic max-w-4xl mx-auto mb-6 text-[#4a1d1d]">
               "यथा दीपो निवातस्थो नेङ्गते सोपमा स्मृता।<br/>योगिनो यतचित्तस्य युञ्जतो योगमात्मनः॥"
             </blockquote>
-            <p className="text-xl mt-4 opacity-90">
+            <p className="text-xl mt-4  text-[#5a3e2b] leading-relaxed ">
               As a lamp in a windless place does not flicker, so does the disciplined mind of a seeker remain steady in the pursuit of knowledge.
             </p>
             <p className="text-sm mt-2 opacity-75">— Bhagavad Gītā 6.19 (adapted)</p>
           </div>
         </section>
-
-        {/* What Makes Us Different */}
-        <section className="py-20 bg-[#f5ebe0] relative">
-          <div className="absolute inset-0 opacity-5" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`
-          }}></div>
-          <div className="container mx-auto px-6 max-w-4xl relative z-10">
-            <h2 className="text-3xl font-bold mb-8 text-[#4a1d1d] text-center">Why SNS?</h2>
-            <div className="space-y-6">
-              <div className="flex gap-4 bg-[#fdfbf7] p-6 rounded-lg shadow-sm border border-[#d4a574]/20">
-                <div className="text-3xl">🔬</div>
-                <div>
-                  <h4 className="font-bold text-lg text-[#4a1d1d] mb-2">Evidence Over Ideology</h4>
-                  <p className="text-gray-700">We follow the data, whether it confirms or challenges traditional claims. Science demands skepticism—even of cherished beliefs.</p>
-                </div>
-              </div>
-              <div className="flex gap-4 bg-[#fdfbf7] p-6 rounded-lg shadow-sm border border-[#d4a574]/20">
-                <div className="text-3xl">🌉</div>
-                <div>
-                  <h4 className="font-bold text-lg text-[#4a1d1d] mb-2">Building Bridges</h4>
-                  <p className="text-gray-700">We translate between worlds—making Sanskrit texts accessible and showing how ancient insights connect with modern research.</p>
-                </div>
-              </div>
-              <div className="flex gap-4 bg-[#fdfbf7] p-6 rounded-lg shadow-sm border border-[#d4a574]/20">
-                <div className="text-3xl">🎓</div>
-                <div>
-                  <h4 className="font-bold text-lg text-[#4a1d1d] mb-2">Learning by Doing</h4>
-                  <p className="text-gray-700">Workshops on <span className="italic">Vedic Mathematics</span>, astronomy observation sessions, <span className="italic">prāṇāyāma</span> labs—we don't just read about it, we experience it.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
+        
         {/* Join CTA */}
         
       </main>

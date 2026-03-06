@@ -28,10 +28,10 @@ const Spirituality = () => {
 
       <main className="relative z-10">
         {/* Hero Section */}
-        <section className="hero-bg-spirit py-32 relative">
+        <section className="hero-bg-spirit py-20 relative">
           <div className="absolute inset-0 bg-[#f4e4c1] opacity-30"></div>
           <div className="container mx-auto px-6 text-center relative z-10">
-            <h1 className="text-5xl md:text-7xl font-bold text-[#4a1d1d] mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#4a1d1d] mb-4">
               <span className="italic">Adhyātma</span>: The Inward Journey
             </h1>
             <p className="text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto">
@@ -41,7 +41,7 @@ const Spirituality = () => {
         </section>
 
         {/* Introduction Section */}
-        <section className="py-20 bg-[#faf6ed] relative">
+        <section className="py-16 bg-[#ECE7D1] relative">
           <div className="absolute inset-0 opacity-5" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.4'/%3E%3C/svg%3E")`
           }}></div>
@@ -74,144 +74,241 @@ const Spirituality = () => {
               Different approaches for different temperaments—because one size never fits all when it comes to inner work.
             </p>
 
-            {/* Path 1: Yoga & Meditation - Full Width Banner */}
-            <div className="mb-10 relative h-[400px] rounded-2xl overflow-hidden shadow-2xl group">
-              <div 
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{
-                  backgroundImage: 'url("https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80")',
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#1a2f23]/95 via-[#1a2f23]/80 to-transparent"></div>
-              <div className="absolute inset-0 opacity-15" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='1'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
-              }}></div>
-              <div className="relative h-full flex items-center px-12">
-                <div className="max-w-2xl">
-                  <div className="flex items-center gap-5 mb-6">
-                    <div className="bg-[#f2cc8f] p-6 rounded-full shadow-2xl">
-                      <span className="text-5xl">🧘</span>
-                    </div>
-                    <div>
-                      <h3 className="text-4xl font-bold text-white mb-1">
-                        <span className="italic">Yoga</span> & <span className="italic">Dhyāna</span>
-                      </h3>
-                      <p className="text-xl text-[#f2cc8f]">Body and Mind as Laboratory</p>
-                    </div>
-                  </div>
-                  <p className="text-white/90 leading-relaxed text-lg mb-3">
-                    Not the Instagram version. We're talking about <span className="italic">Aṣṭāṅga Yoga</span>—the eight-limbed path that includes <span className="italic">āsana</span> (postures), <span className="italic">prāṇāyāma</span> (breath regulation), and <span className="italic">dhāraṇā</span> (concentration). Each technique is a controlled experiment in neuroplasticity.
-                  </p>
-                  <p className="text-white/75 leading-relaxed italic">
-                    We measure heart rate variability during <span className="italic">prāṇāyāma</span>. We track attention metrics in meditation. This isn't faith—it's data.
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Path 1: Yoga & Meditation - Responsive Banner */}
+<div className="mb-10 relative min-h-[450px] md:h-[400px] rounded-2xl overflow-hidden shadow-2xl group">
+  
+  {/* Background Image */}
+  <div 
+    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+    style={{
+      backgroundImage: 'url("https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1200&q=80")',
+    }}
+  />
+
+  {/* Dark Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-r from-[#1a2f23]/95 via-[#1a2f23]/85 to-transparent"></div>
+
+  {/* Paper Texture */}
+  <div
+    className="absolute inset-0 opacity-10"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='1'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
+    }}
+  ></div>
+
+  {/* Content */}
+  <div className="relative h-full flex items-center px-6 md:px-12 py-10">
+    <div className="max-w-2xl">
+
+      {/* Heading Section */}
+      <div className="flex items-center gap-4 md:gap-5 mb-6">
+
+        <div className="bg-[#f2cc8f] p-4 md:p-6 rounded-full shadow-xl w-fit">
+          <span className="text-3xl md:text-5xl">🧘</span>
+        </div>
+
+        <div>
+          <h3 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+            <span className="italic">Yoga</span> & <span className="italic">Dhyāna</span>
+          </h3>
+          <p className="text-base md:text-xl text-[#f2cc8f]">
+            Body and Mind as Laboratory
+          </p>
+        </div>
+
+      </div>
+
+      {/* Description */}
+      <p className="text-white/90 leading-relaxed text-sm md:text-lg mb-4">
+        Not the Instagram version. We're talking about <span className="italic">Aṣṭāṅga Yoga</span>—the eight-limbed path that includes <span className="italic">āsana</span>, <span className="italic">prāṇāyāma</span>, and <span className="italic">dhāraṇā</span>. Each technique is a controlled experiment in neuroplasticity.
+      </p>
+
+      <p className="text-white/75 leading-relaxed italic text-sm md:text-base">
+        We measure heart rate variability during <span className="italic">prāṇāyāma</span>. We track attention metrics in meditation. This isn't faith—it's data.
+      </p>
+
+    </div>
+  </div>
+</div>
 
             {/* Paths 2 & 3: Side by Side */}
-            <div className="grid md:grid-cols-2 gap-10 mb-10">
-              {/* Path 2: Indian Ethos */}
-              <div className="relative h-[480px] rounded-2xl overflow-hidden shadow-2xl group">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                  style={{
-                    backgroundImage: 'url("https://images.unsplash.com/photo-1516450137517-162bfbeb8dba?w=800&q=80")',
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#4a1d1d]/95 via-[#4a1d1d]/75 to-[#4a1d1d]/40"></div>
-                <div className="absolute inset-0 opacity-15" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
-                }}></div>
-                <div className="relative h-full flex flex-col justify-end p-8">
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="bg-[#f2cc8f] p-5 rounded-full shadow-2xl">
-                      <span className="text-4xl">📜</span>
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-white">
-                        Bhāratīya <span className="italic">Nīti</span>
-                      </h3>
-                      <p className="text-lg text-[#f2cc8f]">Ethics for the Real World</p>
-                    </div>
-                  </div>
-                  <p className="text-white/90 leading-relaxed mb-3 text-lg">
-                    Indian philosophical traditions offer frameworks for ethical decision-making that Western business schools are only now discovering: <span className="italic">dharma</span> (contextual duty), <span className="italic">karma</span> (action with awareness), stakeholder thinking long before "ESG" was invented.
-                  </p>
-                  <p className="text-white/75 leading-relaxed text-sm">
-                    How do you lead with integrity when quarterly targets conflict with long-term sustainability? The <span className="italic">Bhagavad Gītā</span> tackled this 2,500 years ago. We apply it to modern management dilemmas.
-                  </p>
-                </div>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 mb-8 md:mb-10">
+  
+  {/* Path 2: Indian Ethos */}
+  <div className="relative h-[420px] sm:h-[460px] md:h-[480px] rounded-2xl overflow-hidden shadow-2xl group">
+    
+    {/* Background Image */}
+    <div 
+      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+      style={{
+        backgroundImage: 'url("https://images.unsplash.com/photo-1516450137517-162bfbeb8dba?w=800&q=80")',
+      }}
+    />
+
+    {/* Dark Gradient Overlay */}
+    <div className="absolute inset-0 bg-gradient-to-t from-[#4a1d1d]/95 via-[#4a1d1d]/75 to-[#4a1d1d]/40"></div>
+
+    {/* Paper Texture */}
+    <div 
+      className="absolute inset-0 opacity-10"
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
+      }}
+    ></div>
+
+    {/* Content */}
+    <div className="relative h-full flex flex-col justify-end p-5 sm:p-6 md:p-8">
+      
+      {/* Header Section */}
+      <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-4">
+        
+        <div className="bg-[#f2cc8f] p-3 sm:p-4 md:p-5 rounded-full shadow-2xl">
+          <span className="text-2xl sm:text-3xl md:text-4xl">📜</span>
+        </div>
+
+        <div>
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-snug">
+            Bhāratīya <span className="italic">Nīti</span>
+          </h3>
+          <p className="text-sm sm:text-base md:text-lg text-[#f2cc8f]">
+            Ethics for the Real World
+          </p>
+        </div>
+
+      </div>
+
+      {/* Main Paragraph */}
+      <p className="text-white/90 leading-relaxed mb-3 text-sm sm:text-base md:text-lg">
+        Indian philosophical traditions offer frameworks for ethical decision-making: 
+        <span className="italic"> dharma</span>, 
+        <span className="italic"> karma</span>, 
+        stakeholder thinking long before ESG.
+      </p>
+
+      {/* Secondary Paragraph */}
+      <p className="text-white/75 leading-relaxed text-xs sm:text-sm">
+        How do you lead with integrity when quarterly targets conflict with sustainability? 
+        The <span className="italic">Bhagavad Gītā</span> tackled this centuries ago.
+      </p>
+
+    </div>
+  </div>
+              
 
               {/* Path 3: Vedanta */}
-              <div className="relative h-[480px] rounded-2xl overflow-hidden shadow-2xl group">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                  style={{
-                    backgroundImage: 'url("https://images.unsplash.com/photo-1614630982169-7b0d68a8a45a?w=800&q=80")',
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#2d1b4e]/95 via-[#2d1b4e]/75 to-[#2d1b4e]/40"></div>
-                <div className="absolute inset-0 opacity-15" style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
-                }}></div>
-                <div className="relative h-full flex flex-col justify-end p-8">
-                  <div className="flex items-center gap-4 mb-5">
-                    <div className="bg-[#f2cc8f] p-5 rounded-full shadow-2xl">
-                      <span className="text-4xl">🕉️</span>
-                    </div>
-                    <div>
-                      <h3 className="text-3xl font-bold text-white">
-                        <span className="italic">Vedānta</span>
-                      </h3>
-                      <p className="text-lg text-[#f2cc8f]">The Philosophy of Consciousness</p>
-                    </div>
-                  </div>
-                  <p className="text-white/90 leading-relaxed mb-3 text-lg">
-                    <span className="italic">Advaita Vedānta</span> (non-dualism) proposes something radical: consciousness isn't produced by the brain—it's fundamental. You're not a body with a soul; you're awareness temporarily identified with a body-mind complex.
-                  </p>
-                  <p className="text-white/75 leading-relaxed text-sm">
-                    Sounds mystical? Quantum physicists are saying similar things about the observer effect. We explore both perspectives—contemplative and scientific—in dialogue.
-                  </p>
-                </div>
-              </div>
-            </div>
+              <div className="relative h-[420px] sm:h-[460px] md:h-[480px] rounded-2xl overflow-hidden shadow-2xl group">
+  
+  {/* Background Image */}
+  <div 
+    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+    style={{
+      backgroundImage: 'url("https://images.unsplash.com/photo-1614630982169-7b0d68a8a45a?w=800&q=80")',
+    }}
+  />
 
-            {/* Path 4: Service - Diagonal Layout */}
-            <div className="relative h-[430px] rounded-2xl overflow-hidden shadow-2xl group">
-              <div 
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{
-                  backgroundImage: 'url("https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1200&q=80")',
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-[#8b4513]/95 via-[#8b4513]/80 to-transparent"></div>
-              <div className="absolute inset-0 opacity-15" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
-              }}></div>
-              <div className="relative h-full flex items-center">
-                <div className="w-full md:w-2/3 px-12">
-                  <div className="flex items-center gap-5 mb-6">
-                    <div className="bg-[#f2cc8f] p-6 rounded-full shadow-2xl">
-                      <span className="text-5xl">🤝</span>
-                    </div>
-                    <div>
-                      <h3 className="text-4xl font-bold text-white mb-1">
-                        <span className="italic">Sevā</span> — Service as Practice
-                      </h3>
-                      <p className="text-xl text-[#f2cc8f]">Compassion in Action</p>
-                    </div>
-                  </div>
-                  <p className="text-white/90 leading-relaxed text-lg mb-4">
-                    Vivekananda said it plainly: "Service to humanity is service to God." Not as moral obligation, but as recognition that individual and collective wellbeing are inseparable. When you help someone else level up, you level up.
-                  </p>
-                  <p className="text-white/75 leading-relaxed italic">
-                    We organize community service not as charity, but as <span className="italic">karma yoga</span>—selfless action that transforms both server and served. It's ego dissolution through practical work.
-                  </p>
-                </div>
-              </div>
-            </div>
+  {/* Gradient Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-t from-[#2d1b4e]/95 via-[#2d1b4e]/75 to-[#2d1b4e]/40"></div>
+
+  {/* Paper Texture */}
+  <div 
+    className="absolute inset-0 opacity-10"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
+    }}
+  ></div>
+
+  {/* Content */}
+  <div className="relative h-full flex flex-col justify-end p-5 sm:p-6 md:p-8">
+    
+    {/* Header Section */}
+    <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-4">
+      
+      <div className="bg-[#f2cc8f] p-3 sm:p-4 md:p-5 rounded-full shadow-2xl">
+        <span className="text-2xl sm:text-3xl md:text-4xl">🕉️</span>
+      </div>
+
+      <div>
+        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-snug">
+          <span className="italic">Vedānta</span>
+        </h3>
+        <p className="text-sm sm:text-base md:text-lg text-[#f2cc8f]">
+          The Philosophy of Consciousness
+        </p>
+      </div>
+    </div>
+
+    {/* Main Paragraph */}
+    <p className="text-white/90 leading-relaxed mb-3 text-sm sm:text-base md:text-lg">
+      <span className="italic">Advaita Vedānta</span> proposes something radical: 
+      consciousness isn't produced by the brain—it's fundamental.
+    </p>
+
+    {/* Secondary Paragraph */}
+    <p className="text-white/75 leading-relaxed text-xs sm:text-sm">
+      Quantum physicists speak of the observer effect. 
+      We explore contemplative and scientific perspectives in dialogue.
+    </p>
+
+  </div>
+</div>
+</div>
+
+            {/* Path 4: Service - Responsive Layout */}
+<div className="relative min-h-[480px] md:h-[430px] rounded-2xl overflow-hidden shadow-2xl group">
+
+  {/* Background Image */}
+  <div 
+    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+    style={{
+      backgroundImage: 'url("https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1200&q=80")',
+    }}
+  />
+
+  {/* Gradient Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-br from-[#8b4513]/95 via-[#8b4513]/85 to-transparent"></div>
+
+  {/* Paper Texture */}
+  <div
+    className="absolute inset-0 opacity-10"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper-texture'%3E%3CfeTurbulence baseFrequency='0.04' numOctaves='5' seed='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23paper-texture)' fill='%23c19a6b'/%3E%3C/svg%3E")`
+    }}
+  ></div>
+
+  {/* Content */}
+  <div className="relative h-full flex items-center py-10">
+    <div className="w-full md:w-2/3 px-6 md:px-12">
+
+      {/* Heading Row */}
+      <div className="flex items-center gap-4 mb-6">
+
+        <div className="bg-[#f2cc8f] p-4 md:p-6 rounded-full shadow-xl flex-shrink-0">
+          <span className="text-3xl md:text-5xl">🤝</span>
+        </div>
+
+        <div>
+          <h3 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+            <span className="italic">Sevā</span> — Service as Practice
+          </h3>
+          <p className="text-sm md:text-xl text-[#f2cc8f]">
+            Compassion in Action
+          </p>
+        </div>
+
+      </div>
+
+      {/* Description */}
+      <p className="text-white/90 leading-relaxed text-sm md:text-lg mb-4">
+        Vivekananda said it plainly: "Service to humanity is service to God." Not as moral obligation, but as recognition that individual and collective wellbeing are inseparable. When you help someone else level up, you level up.
+      </p>
+
+      <p className="text-white/75 leading-relaxed italic text-sm md:text-base">
+        We organize community service not as charity, but as <span className="italic">karma yoga</span>—selfless action that transforms both server and served. It's ego dissolution through practical work.
+      </p>
+
+    </div>
+  </div>
+</div>
           </div>
         </section>
 
@@ -266,14 +363,14 @@ const Spirituality = () => {
         </section>
 
         {/* Motivational Banner */}
-        <section className="bg-[#be3a34] py-24 text-white relative">
+        <section className=" bg-[#FAEDD2] py-24  relative">
           <div className="absolute inset-0 opacity-10" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.5' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.6'/%3E%3C/svg%3E")`
           }}></div>
           <div className="container mx-auto px-6 text-center relative z-10">
-            <blockquote className="text-3xl md:text-5xl font-bold max-w-4xl mx-auto mb-6 leading-tight">
+            <blockquote className="text-3xl md:text-5xl font-bold max-w-4xl mx-auto mb-6 leading-tight text-[#4a1d1d]">
               "उत्तिष्ठत जाग्रत प्राप्य वरान्निबोधत।"<br/>
-              <span className="text-2xl md:text-3xl mt-4 block opacity-90">
+              <span className="text-2xl md:text-3xl mt-4 block opacity-90 text-[#5a3e2b]">
                 Arise! Awake! And stop not till the goal is reached.
               </span>
             </blockquote>
@@ -282,6 +379,7 @@ const Spirituality = () => {
             </cite>
           </div>
         </section>
+
 
         {/* Join CTA */}
         
