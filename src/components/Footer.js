@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -45,7 +45,7 @@ const Footer = () => {
             <span className="text-gray-400">|</span>
             <a href="#" className="hover:text-[#be3a34] transition-colors">Contact Us</a>
             <span className="text-gray-400">|</span>
-            <a href="/banglo/admin" className="hover:text-[#be3a34] transition-colors">Admin Login</a>
+            <Link to="/admin" className="hover:text-[#be3a34] transition-colors">Admin Login</Link>
           </div>
 
           {/* Sanskrit Quote */}

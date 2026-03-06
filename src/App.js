@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Index from './pages/Index';
 import Founder from './pages/Founder';
@@ -12,7 +12,7 @@ import AdminPanel from './pages/AdminPanel';
 
 function App() {
   return (
-    <Router basename="/banglo" future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="App">
         <Routes>
           <Route path="/" element={<Index />} />
