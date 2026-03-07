@@ -54,12 +54,11 @@ const Index = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
 
               {/* Content */}
-              <div className="absolute bottom-0 left-0 w-full p-4 backdrop-blur-[1px] bg-gradient-to-t from-black/50 via-black/20 to-transparent
-rounded-b-xl">
-                    
-                <h3 className="text-3xl md:text-5xl  mb-4 drop-shadow-lg tracking-wide text-white font-bold">{video.title}</h3>
-                <p className="text-lg md:text-xl text-white leading-relaxed drop-shadow-md opacity-70 max-w-2xl">{video.description}</p>
-                
+              <div className="absolute bottom-0 left-0 w-full p-4 pb-12 md:pb-8 backdrop-blur-[1px] bg-gradient-to-t from-black/50 via-black/20 to-transparent rounded-b-xl">
+
+                <h3 className="text-3xl md:text-5xl mb-2 md:mb-4 drop-shadow-lg tracking-wide text-white font-bold">{video.title}</h3>
+                <p className="text-sm md:text-xl text-white leading-relaxed drop-shadow-md opacity-90 max-w-2xl">{video.description}</p>
+
               </div>
             </div>
           ))}
@@ -94,9 +93,9 @@ rounded-b-xl">
       {/* Intro Section */}
       <section className="py-20 px-4 bg-[#FFF2D0] relative backdrop-blur-[4px]"
       //style={{
-    //backgroundImage:
+      //backgroundImage:
       //'url("https://img.pikbest.com/wp/202344/parchment-paper-vintage-horizontal-banner-texture-aged-wallpaper_9903141.jpg!sw800")',
-  //}}
+      //}}
       >
         <div className="container mx-auto text-center max-w-5xl  ">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#4a1d1d]">Welcome to CIKS & SNS Club</h2>
@@ -109,51 +108,51 @@ rounded-b-xl">
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-  {[
-    { title: 'IKS Research', desc: 'Investigating ancient Indian sciences with modern validation.' },
-    { title: 'Ethos & Values', desc: 'Promoting Indian ethics in management and lifestyle.' },
-    { title: 'Seva (Service)', desc: 'Cultivating a spirit of service and community welfare.' }
-  ].map((book, i) => (
+            {[
+              { title: 'IKS Research', desc: 'Investigating ancient Indian sciences with modern validation.' },
+              { title: 'Ethos & Values', desc: 'Promoting Indian ethics in management and lifestyle.' },
+              { title: 'Seva (Service)', desc: 'Cultivating a spirit of service and community welfare.' }
+            ].map((book, i) => (
 
-    <div key={i} className="relative flex justify-center bg-transparent">
+              <div key={i} className="relative flex justify-center bg-transparent">
 
-      <img
-        src={process.env.PUBLIC_URL + "/sticky.png"}
-        alt="Open Book"
-        className="w-[420px] object-contain"
-      />
+                <img
+                  src={process.env.PUBLIC_URL + "/sticky.png"}
+                  alt="Open Book"
+                  className="w-[420px] object-contain"
+                />
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-16 text-center">
+                <div className="absolute inset-0 flex flex-col items-center justify-center px-16 text-center">
 
-        <h3 className="text-2xl font-bold text-[#3b2a1a] mb-4">
-          {book.title}
-        </h3>
+                  <h3 className="text-2xl font-bold text-[#3b2a1a] mb-4">
+                    {book.title}
+                  </h3>
 
-        <p className="text-gray-600 text-lg mb-6">
-          {book.desc}
-        </p>
+                  <p className="text-gray-600 text-lg mb-6">
+                    {book.desc}
+                  </p>
 
-        <Link
-          to="/overview"
-          className="text-[#be3a34] font-semibold text-lg hover:text-[#4a1d1d]"
-        >
-          Learn More →
-        </Link>
+                  <Link
+                    to="/overview"
+                    className="text-[#be3a34] font-semibold text-lg hover:text-[#4a1d1d]"
+                  >
+                    Learn More →
+                  </Link>
 
-      </div>
+                </div>
 
-    </div>
+              </div>
 
-  ))}
+            ))}
 
-</div>
+          </div>
         </div>
       </section>
-<Footer />
+      <Footer />
 
-    
 
-     
+
+
 
     </div>
   );
