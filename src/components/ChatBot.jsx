@@ -34,9 +34,28 @@ export default function ChatBot() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [hasGreeted, setHasGreeted] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const messagesEndRef = useRef(null);
     const inputRef = useRef(null);
     const msgIdRef = useRef(0);
+
+    // ── Mobile Detection ──────────────────────────────────────────────────────
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 480);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // ── Body Scroll Lock on Mobile ────────────────────────────────────────────
+    useEffect(() => {
+        if (isMobile && isOpen && !isMinimized) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => { document.body.style.overflow = ''; };
+    }, [isMobile, isOpen, isMinimized]);
 
     // ── Scroll to bottom on new messages ──────────────────────────────────────
     useEffect(() => {
@@ -152,72 +171,106 @@ export default function ChatBot() {
     return (
         <>
             {/* ── Floating Trigger Button ──────────────────────────────────── */}
-            <button
-                onClick={() => {
-                    setIsOpen(true);
-                    setIsMinimized(false);
-                }}
-                aria-label="Open Vidya AI Assistant"
+            <div
+                className="vidya-trigger-container"
                 style={{
                     position: 'fixed',
-                    bottom: '28px',
-                    right: '28px',
+                    bottom: isMobile ? '16px' : 'calc(env(safe-area-inset-bottom, 24px) + 8px)',
+                    right: isMobile ? '16px' : '24px',
                     zIndex: 9999,
-                    width: '62px',
-                    height: '62px',
-                    borderRadius: '50%',
-                    border: 'none',
-                    cursor: 'pointer',
-                    background: 'linear-gradient(135deg, #be3a34 0%, #8B2020 100%)',
-                    boxShadow: '0 6px 24px rgba(190,58,52,0.45), 0 2px 8px rgba(0,0,0,0.2)',
                     display: isOpen && !isMinimized ? 'none' : 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                }}
-                onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(190,58,52,0.55)';
-                }}
-                onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 6px 24px rgba(190,58,52,0.45), 0 2px 8px rgba(0,0,0,0.2)';
+                    animation: 'vidya-entrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both',
                 }}
             >
-                {/* OM symbol SVG */}
-                <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <text x="50%" y="58%" dominantBaseline="middle" textAnchor="middle"
-                        fontSize="58" fontFamily="serif" fill="white" opacity="0.95">ॐ</text>
-                </svg>
+                {/* Tooltip (Desktop only via CSS) */}
+                <div className="vidya-tooltip">
+                    Chat with Vidya
+                </div>
 
-                {/* Pulse ring */}
-                <span style={{
-                    position: 'absolute', inset: 0, borderRadius: '50%',
-                    border: '2px solid rgba(190,58,52,0.5)',
-                    animation: 'vidya-pulse 2s ease-out infinite',
-                    pointerEvents: 'none',
-                }} />
-            </button>
+                <button
+                    onClick={() => {
+                        setIsOpen(true);
+                        setIsMinimized(false);
+                    }}
+                    aria-label="Open Vidya AI Assistant"
+                    className="vidya-trigger-btn"
+                    style={{
+                        position: 'relative',
+                        borderRadius: '50%',
+                        border: '2px solid #f2cc8f', // Gold/Saffron accent ring
+                        cursor: 'pointer',
+                        background: 'linear-gradient(135deg, #be3a34 0%, #4a1d1d 100%)',
+                        boxShadow: `
+                            0 10px 30px rgba(74, 29, 29, 0.4),
+                            0 4px 10px rgba(0, 0, 0, 0.2),
+                            inset 0 2px 4px rgba(255, 255, 255, 0.15)
+                        `,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        padding: 0,
+                        outline: 'none',
+                    }}
+                >
+                    {/* OM symbol with subtle inner glow/emboss */}
+                    <svg
+                        width="60%"
+                        height="60%"
+                        viewBox="0 0 100 100"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        style={{ filter: 'drop-shadow(0 0 1px rgba(242, 204, 143, 0.4))' }}
+                    >
+                        <text
+                            x="50%"
+                            y="58%"
+                            dominantBaseline="middle"
+                            textAnchor="middle"
+                            fontSize="62"
+                            fontFamily="serif"
+                            fill="white"
+                            style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}
+                        >
+                            ॐ
+                        </text>
+                    </svg>
+
+                    {/* Elegant Slow Pulse */}
+                    <span style={{
+                        position: 'absolute',
+                        inset: '-4px',
+                        borderRadius: '50%',
+                        border: '1.5px solid rgba(242, 204, 143, 0.3)',
+                        animation: 'vidya-pulse-slow 4s ease-out infinite',
+                        pointerEvents: 'none',
+                    }} />
+                </button>
+            </div>
 
             {/* ── Chat Window ─────────────────────────────────────────────── */}
             {isOpen && (
                 <div
                     style={{
                         position: 'fixed',
-                        bottom: '28px',
-                        right: '28px',
+                        bottom: isMobile && !isMinimized ? '0' : '28px',
+                        right: isMobile && !isMinimized ? '0' : '28px',
+                        left: isMobile && !isMinimized ? '0' : 'auto',
                         zIndex: 9998,
-                        width: isMinimized ? '280px' : '380px',
-                        height: isMinimized ? 'auto' : '580px',
-                        borderRadius: '20px',
+                        width: isMinimized ? '280px' : (isMobile ? '100%' : '380px'),
+                        height: isMinimized ? 'auto' : (isMobile ? '75vh' : '580px'),
+                        borderRadius: isMobile && !isMinimized ? '24px 24px 0 0' : '20px',
                         overflow: 'hidden',
                         boxShadow: '0 24px 60px rgba(74,29,29,0.25), 0 8px 20px rgba(0,0,0,0.15)',
                         display: 'flex',
                         flexDirection: 'column',
                         fontFamily: "'Georgia', 'Times New Roman', serif",
-                        animation: 'vidya-slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1)',
+                        animation: isMobile && !isMinimized ? 'vidya-slideUpMobile 0.4s ease-out' : 'vidya-slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1)',
                         border: '1px solid rgba(190,58,52,0.15)',
                         background: '#fdf8f3',
+                        transition: 'all 0.3s ease',
                     }}
                 >
                     {/* ── Header ─────────────────────────────────────────── */}
@@ -237,6 +290,7 @@ export default function ChatBot() {
                             width: '100px', height: '100px',
                             opacity: 0.06, fontSize: '90px', lineHeight: 1,
                             fontFamily: 'serif', color: '#f2cc8f', userSelect: 'none',
+                            pointerEvents: 'none',
                         }}>ॐ</div>
 
                         {/* Avatar */}
@@ -267,7 +321,12 @@ export default function ChatBot() {
                         </div>
 
                         {/* Controls */}
-                        <div style={{ display: 'flex', gap: '4px' }}>
+                        <div style={{
+                            display: 'flex',
+                            gap: '4px',
+                            position: 'relative',
+                            zIndex: 2,
+                        }}>
                             <IconBtn title="Clear chat" onClick={clearChat}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                     <polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" />
@@ -312,8 +371,8 @@ export default function ChatBot() {
                                                     background: 'white',
                                                     border: '1px solid rgba(190,58,52,0.25)',
                                                     borderRadius: '20px',
-                                                    padding: '5px 12px',
-                                                    fontSize: '11.5px',
+                                                    padding: isMobile ? '7px 14px' : '5px 12px',
+                                                    fontSize: isMobile ? '12px' : '11.5px',
                                                     color: '#4a1d1d',
                                                     cursor: 'pointer',
                                                     fontFamily: 'sans-serif',
@@ -406,7 +465,7 @@ export default function ChatBot() {
                                         resize: 'none',
                                         border: '1.5px solid rgba(190,58,52,0.3)',
                                         borderRadius: '12px',
-                                        padding: '9px 12px',
+                                        padding: isMobile ? '12px 14px' : '9px 12px',
                                         fontSize: '13.5px',
                                         fontFamily: "'Georgia', serif",
                                         background: loading ? '#faf6f0' : 'white',
@@ -415,7 +474,7 @@ export default function ChatBot() {
                                         lineHeight: '1.5',
                                         maxHeight: '100px',
                                         overflowY: 'auto',
-                                        transition: 'border-color 0.2s',
+                                        transition: 'all 0.2s',
                                     }}
                                     onFocus={(e) => e.target.style.borderColor = '#be3a34'}
                                     onBlur={(e) => e.target.style.borderColor = 'rgba(190,58,52,0.3)'}
@@ -429,14 +488,14 @@ export default function ChatBot() {
                                     onClick={() => sendMessage()}
                                     disabled={!input.trim() || loading}
                                     style={{
-                                        width: '40px',
-                                        height: '40px',
+                                        width: isMobile ? '46px' : '40px',
+                                        height: isMobile ? '46px' : '40px',
                                         borderRadius: '50%',
                                         border: 'none',
                                         cursor: !input.trim() || loading ? 'not-allowed' : 'pointer',
                                         background: !input.trim() || loading
                                             ? '#e8d5d5'
-                                            : 'linear-gradient(135deg, #be3a34 0%, #8B2020 100%)',
+                                            : 'linear-gradient(135deg, #be3a34 0%, #4a1d1d 100%)',
                                         color: 'white',
                                         display: 'flex',
                                         alignItems: 'center',
@@ -478,10 +537,62 @@ export default function ChatBot() {
 
             {/* ── Global Keyframe CSS ─────────────────────────────────────── */}
             <style>{`
-                @keyframes vidya-pulse {
-                    0%   { transform: scale(1);   opacity: 0.8; }
-                    70%  { transform: scale(1.6); opacity: 0;   }
-                    100% { transform: scale(1.6); opacity: 0;   }
+                :root {
+                    --vidya-btn-size: 58px;
+                }
+                @media (max-width: 600px) {
+                    :root { --vidya-btn-size: 64px; }
+                }
+
+                .vidya-trigger-btn {
+                    width: var(--vidya-btn-size);
+                    height: var(--vidya-btn-size);
+                }
+
+                .vidya-trigger-btn:hover {
+                    transform: scale(1.08) translateY(-3px);
+                    box-shadow: 0 15px 35px rgba(74, 29, 29, 0.5);
+                }
+
+                .vidya-tooltip {
+                    position: absolute;
+                    right: calc(var(--vidya-btn-size) + 12px);
+                    background: #4a1d1d;
+                    color: #f2cc8f;
+                    padding: 6px 14px;
+                    border-radius: 8px;
+                    font-size: 13px;
+                    white-space: nowrap;
+                    pointer-events: none;
+                    opacity: 0;
+                    transform: translateX(10px);
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                    border: 1px solid rgba(242, 204, 143, 0.2);
+                    font-family: sans-serif;
+                }
+
+                .vidya-trigger-container:hover .vidya-tooltip {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+
+                @media (max-width: 800px) {
+                    .vidya-tooltip { display: none; }
+                }
+
+                @keyframes vidya-entrance {
+                    0%   { opacity: 0; transform: translateY(40px) scale(0.5); rotate: -15deg; }
+                    100% { opacity: 1; transform: translateY(0) scale(1); rotate: 0deg; }
+                }
+                @keyframes vidya-slideUpMobile {
+                    from { transform: translateY(100%); }
+                    to { transform: translateY(0); }
+                }
+                @keyframes vidya-pulse-slow {
+                    0%   { transform: scale(1);   opacity: 0.5; }
+                    70%  { transform: scale(1.4); opacity: 0;   }
+                    100% { transform: scale(1.4); opacity: 0;   }
                 }
                 @keyframes vidya-slideUp {
                     from { opacity: 0; transform: translateY(20px) scale(0.96); }
