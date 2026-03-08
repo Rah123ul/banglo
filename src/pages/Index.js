@@ -8,8 +8,8 @@ const Index = () => {
   const [currentVideo, setCurrentVideo] = useState(0);
 
   const videos = [
-    { src: 'https://media.istockphoto.com/id/2190386610/video/young-group-of-students-walking-on-road-engrossed-in-a-conversation.mp4?s=mp4-640x640-is&k=20&c=SDEJDV34rH9AEV96dijcZzlz0Uh3K0hQZXVmqKSPDm4=', title: 'Legacy of Learning', description: 'Exploring the 5000-year-old heritage of Indian Knowledge Systems at NIT Calicut.' },
-    { src: 'https://media.istockphoto.com/id/2177048984/video/time-is-flying-by-spiral-clock-and-cloudscape-loopable-animation.mp4?s=mp4-640x640-is&k=20&c=cg432rj1jpqvGrSX8kjyu0Xh3lRuNRL_1aeZAPWAArU=', title: 'Science & Spirituality', description: 'Finding the harmony between empirical evidence and inner wisdom.' },
+    { src: process.env.PUBLIC_URL + '/khu-opt.mp4', title: 'Legacy of Learning', description: 'Exploring the 5000-year-old heritage of Indian Knowledge Systems at NIT Calicut.' },
+    { src: process.env.PUBLIC_URL + '/sky-opt.mp4', title: 'Science & Spirituality', description: 'Finding the harmony between empirical evidence and inner wisdom.' },
     { src: 'https://media.istockphoto.com/id/1462128810/video/technical-college-student-conversing-with-teacher.mp4?s=mp4-640x640-is&k=20&c=7PL15D6UkFeNR2tvaJQ_5FloxvQ8S9w6TYBybA8x5t0=', title: 'Empowering Future Leaders', description: 'Nurturing holistic development through ethics, values, and technical excellence.' }
   ];
 
@@ -91,13 +91,19 @@ const Index = () => {
       </section>
 
       {/* Intro Section */}
-      <section className="py-20 px-4 bg-[#FFF2D0] relative backdrop-blur-[4px]"
-      //style={{
-      //backgroundImage:
-      //'url("https://img.pikbest.com/wp/202344/parchment-paper-vintage-horizontal-banner-texture-aged-wallpaper_9903141.jpg!sw800")',
-      //}}
-      >
-        <div className="container mx-auto text-center max-w-5xl  ">
+      <section className="py-20 px-4 bg-[#fcf5e3] relative overflow-hidden shadow-inner">
+
+        {/* Abstract Background Aesthetic - Left (Sri Yantra) */}
+        <div className="absolute -left-32 md:-left-80 -top-20 opacity-[0.04] pointer-events-none mix-blend-multiply" style={{ animation: 'spin 180s linear infinite' }}>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sri_Yantra_2.svg/1024px-Sri_Yantra_2.svg.png" alt="" className="w-[600px] md:w-[1000px] h-auto" />
+        </div>
+
+        {/* Abstract Background Aesthetic - Right (Dharma Chakra) */}
+        <div className="absolute -right-32 md:-right-80 -bottom-40 opacity-[0.03] pointer-events-none mix-blend-multiply" style={{ animation: 'spin 240s linear infinite reverse' }}>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Dharmacakra.svg/1024px-Dharmacakra.svg.png" alt="" className="w-[600px] md:w-[1000px] h-auto" />
+        </div>
+
+        <div className="container mx-auto text-center max-w-6xl relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[#4a1d1d]">Welcome to CIKS & SNS Club</h2>
           <div className="w-24 h-1 bg-[#be3a34] mx-auto mb-8 rounded-full"></div>
           <p className="text-xl text-gray-700 leading-relaxed mb-16 max-w-3xl mx-auto backdrop-blur-[4px]">
@@ -109,40 +115,67 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
             {[
-              { title: 'IKS Research', desc: 'Investigating ancient Indian sciences with modern validation.' },
-              { title: 'Ethos & Values', desc: 'Promoting Indian ethics in management and lifestyle.' },
-              { title: 'Seva (Service)', desc: 'Cultivating a spirit of service and community welfare.' }
+              { title: 'IKS Research', desc: 'Investigating ancient Indian sciences with modern validation.', sanskrit: 'ज्ञान' },
+              { title: 'Ethos & Values', desc: 'Promoting Indian ethics in management and lifestyle.', sanskrit: 'धर्म' },
+              { title: 'Seva (Service)', desc: 'Cultivating a spirit of service and community welfare.', sanskrit: 'सेवा' }
             ].map((book, i) => (
+              <div
+                key={i}
+                className="group relative flex flex-col items-center justify-between p-10 min-h-[380px] w-full max-w-[360px] mx-auto transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-4 hover:scale-[1.02]"
+                style={{
+                  background: 'linear-gradient(145deg, #fdf8e9 0%, #e6d3a8 100%)',
+                  boxShadow: '10px 15px 35px rgba(74, 29, 29, 0.15), inset 0 0 60px rgba(139, 69, 19, 0.08)',
+                  borderRadius: '2px 30px 2px 30px',
+                  border: '1px solid rgba(139, 69, 19, 0.3)',
+                }}
+              >
 
-              <div key={i} className="relative flex justify-center bg-transparent">
-
-                <img
-                  src={process.env.PUBLIC_URL + "/sticky.png"}
-                  alt="Open Book"
-                  className="w-[420px] object-contain"
-                />
-
-                <div className="absolute inset-0 flex flex-col items-center justify-center px-16 text-center">
-
-                  <h3 className="text-2xl font-bold text-[#3b2a1a] mb-4">
-                    {book.title}
-                  </h3>
-
-                  <p className="text-gray-600 text-lg mb-6">
-                    {book.desc}
-                  </p>
-
-                  <Link
-                    to="/overview"
-                    className="text-[#be3a34] font-semibold text-lg hover:text-[#4a1d1d]"
-                  >
-                    Learn More →
-                  </Link>
-
+                {/* Background Watermark */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none overflow-hidden rounded-[2px_30px_2px_30px]">
+                  <span className="text-9xl font-bold text-[#4a1d1d] select-none" style={{ fontFamily: '"Noto Serif Devanagari", serif', transform: 'scale(2.5)' }}>
+                    {book.sanskrit}
+                  </span>
                 </div>
 
-              </div>
+                {/* Top Ornament */}
+                <div className="relative mb-6 w-full flex justify-center">
+                  <div className="w-24 h-[1px] bg-[#8B4513] opacity-30"></div>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[#8B4513] opacity-60 text-xl font-serif">
+                    ❖
+                  </div>
+                </div>
 
+                {/* Main Content */}
+                <div className="relative z-10 flex-grow flex flex-col items-center justify-center text-center">
+                  <h3
+                    className="text-2xl md:text-3xl font-bold mb-4 text-[#4a1d1d] uppercase transition-colors duration-500 group-hover:text-[#be3a34]"
+                    style={{ fontFamily: "'Cinzel', 'Playfair Display', serif", letterSpacing: '3px', textShadow: '1px 1px 0px rgba(255,255,255,0.7)' }}
+                  >
+                    {book.title}
+                  </h3>
+                  <div className="w-12 h-[2px] bg-[#be3a34] mx-auto mb-6 opacity-40 transition-all duration-500 group-hover:w-20 group-hover:opacity-80"></div>
+                  <p
+                    className="text-gray-800 text-lg leading-relaxed font-semibold px-2"
+                    style={{ fontFamily: "'Cormorant Garamond', 'Georgia', serif" }}
+                  >
+                    {book.desc}
+                  </p>
+                </div>
+
+                {/* Bottom Button */}
+                <div className="mt-8 relative z-10 w-full flex justify-center">
+                  <Link
+                    to="/overview"
+                    className="group-hover:text-[#fdf8e9] group-hover:bg-[#4a1d1d] group-hover:border-[#4a1d1d] transition-all duration-500 text-[#4a1d1d] font-bold text-xs tracking-[0.3em] uppercase py-3 px-8 border border-[#4a1d1d]/40 rounded-sm shadow-sm"
+                  >
+                    Uncover
+                  </Link>
+                </div>
+
+                {/* Magical Gold Hover Glow */}
+                <div className="absolute inset-0 rounded-[2px_30px_2px_30px] opacity-0 group-hover:opacity-100 shadow-[0_0_40px_rgba(212,175,55,0.3)] transition-all duration-700 pointer-events-none border border-transparent group-hover:border-[#d4af37]/50"></div>
+
+              </div>
             ))}
 
           </div>

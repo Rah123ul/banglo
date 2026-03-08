@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import ChatBot from './components/ChatBot';
 import Index from './pages/Index';
 import Founder from './pages/Founder';
 import Science from './pages/Science';
@@ -14,6 +15,7 @@ function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="App">
+
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/founder" element={<Founder />} />
@@ -24,6 +26,9 @@ function App() {
           <Route path="/overview" element={<Overview />} />
           <Route path="/admin" element={<AdminPanel />} />
         </Routes>
+
+        <ChatBot />
+
       </div>
     </Router>
   );
