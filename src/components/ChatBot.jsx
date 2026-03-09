@@ -255,13 +255,14 @@ export default function ChatBot() {
                 <div
                     style={{
                         position: 'fixed',
+                        top: isMobile && !isMinimized ? '0' : 'auto',
                         bottom: isMobile && !isMinimized ? '0' : '28px',
                         right: isMobile && !isMinimized ? '0' : '28px',
                         left: isMobile && !isMinimized ? '0' : 'auto',
                         zIndex: 9998,
                         width: isMinimized ? '280px' : (isMobile ? '100%' : '380px'),
-                        height: isMinimized ? 'auto' : (isMobile ? '75vh' : '580px'),
-                        borderRadius: isMobile && !isMinimized ? '24px 24px 0 0' : '20px',
+                        height: isMinimized ? 'auto' : (isMobile ? '100%' : '580px'),
+                        borderRadius: isMobile && !isMinimized ? '0' : '20px',
                         overflow: 'hidden',
                         boxShadow: '0 24px 60px rgba(74,29,29,0.25), 0 8px 20px rgba(0,0,0,0.15)',
                         display: 'flex',
