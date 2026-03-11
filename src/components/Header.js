@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Update document title on route change
+  useEffect(() => {
+    const navItems = [
+      { name: 'Founder', path: '/founder' },
+      { name: 'Science', path: '/science' },
+      { name: 'Spirituality', path: '/spirituality' },
+      { name: 'Gallery', path: '/gallery' },
+      { name: 'About Us', path: '/overview' },
+      { name: 'Events', path: '/events' },
+    ];
+    const currentItem = navItems.find(item => item.path === location.pathname);
+    document.title = currentItem ? `${currentItem.name} | SNS Club` : 'SNS Club';
+  }, [location]);
 
   const shlokas = [
     '✦  विद्या ददाति विनयम्  ✦',
@@ -34,7 +49,7 @@ const Header = () => {
             <img
               src={process.env.PUBLIC_URL + "/snslogo.png"}
               alt="SNS Club Logo"
-              className="w-8 h-8 md:w-[50px] md:h-[50px] object-contain flex-shrink-0"
+              className="w-8 h-8 md:w-[50px] md:h-[50px] object-contain flex-shrink-0 drop-shadow-[0_0_8px_rgba(255,255,255,1)] brightness-110 contrast-110"
             />
             <div className="flex flex-col leading-tight">
               <span className="text-[#4a1d1d] text-sm md:text-lg font-black tracking-tighter uppercase">
@@ -98,8 +113,8 @@ const Header = () => {
           )}
 
           {/* Navigation Links */}
-         <ul
-  className={`
+          <ul
+            className={`
     fixed top-0 left-0 h-full w-72 bg-[#723939] flex flex-col pt-20
     transform transition-transform duration-300 ease-in-out z-50 shadow-2xl
     ${menuOpen ? "translate-x-0" : "-translate-x-full"}
@@ -122,29 +137,43 @@ const Header = () => {
             </div>
 
             {[
-              //{ name: 'Home', path: '/' },
               { name: 'Founder', path: '/founder' },
               { name: 'Science', path: '/science' },
               { name: 'Spirituality', path: '/spirituality' },
               { name: 'Gallery', path: '/gallery' },
               { name: 'About Us', path: '/overview' },
               { name: 'Events', path: '/events' },
-            ].map((item, i) => (
-              <li key={i} className="w-full md:w-auto">
-                <Link
-                  to={item.path}
-                  onClick={() => setMenuOpen(false)}
-                  className="
-                    block py-2 px-4 text-sm font-bold tracking-[0.15em] uppercase
-                    border-b border-white/5
-                    hover:bg-white/10 hover:text-[#f2cc8f] transition-all
-                    md:border-b-0 md:py-4 md:px-5 md:hover:bg-transparent md:hover:text-[#f2cc8f]
-                  "
-                >
-                  {item.name}
-                </Link>
-              </li>
-            ))}
+            ].map((item, i) => {
+              const isActive = location.pathname === item.path;
+              return (
+                <li key={i} className="w-full md:w-auto">
+                  <Link
+                    to={item.path}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`
+                      block uppercase tracking-[0.15em] text-sm transition-all duration-200 ease-in-out
+                      
+                      /* Mobile Drawer Styles */
+                      py-3 px-6 border-l-[3px] 
+                      ${isActive
+                        ? 'border-[#f2cc8f] bg-[#f2cc8f]/10 text-[#f2cc8f] font-bold'
+                        : 'border-transparent text-white font-normal'}
+                      
+                      /* Desktop Styles */
+                      md:border-l-0 md:py-4 md:px-5 md:border-b-[3px]
+                      ${isActive
+                        ? 'md:border-[#f2cc8f] md:bg-[#f2cc8f]/10 md:text-[#f2cc8f] font-bold'
+                        : 'md:border-transparent md:bg-transparent text-white font-normal'}
+                      
+                      md:hover:text-[#f2cc8f]
+                    `}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </nav>

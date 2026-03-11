@@ -35,7 +35,7 @@ const Index = () => {
       <Header />
 
       {/* Hero Section / Video Slider */}
-      <section className="relative h-[400px] md:h-[610px] w-full overflow-hidden bg-gray-100 group">
+      <section className="relative h-[500px] md:h-[600px] w-full overflow-hidden bg-gray-100 group">
         <div id="video-slider" className="relative w-full h-full">
           {videos.map((video, index) => (
             <div
