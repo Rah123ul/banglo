@@ -137,6 +137,7 @@ const Header = () => {
             </div>
 
             {[
+              
               { name: 'Founder', path: '/founder' },
               { name: 'Science', path: '/science' },
               { name: 'Spirituality', path: '/spirituality' },

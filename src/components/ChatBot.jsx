@@ -14,6 +14,21 @@ const COLORS = {
     cream: '#fdf8f3'
 };
 
+// ── Highlight Helper ────────────────────────────────────────────────────────
+const h = (text, type = 'event') => {
+    let styles = "font-weight:700;padding:1px 5px;border-radius:4px;font-family:Georgia,serif;";
+    if (type === 'event') {
+        styles += `color:#be3a34;background:rgba(190,58,52,0.08);`;
+    } else if (type === 'field') {
+        styles += `color:#4a1d1d;background:rgba(74,29,29,0.07);`;
+    } else if (type === 'success') {
+        styles += `color:#2d7a4f;background:rgba(45,122,79,0.08);`;
+    } else if (type === 'name') {
+        styles += `color:#81b29a;background:transparent;`;
+    }
+    return `<span style="${styles}">${text}</span>`;
+};
+
 const QUICK_ACTIONS = [
     { label: '🏛️ Club Events', query: 'Tell me about upcoming club events' },
     { label: '📚 Indian Knowledge Systems', query: 'Explain Indian Knowledge Systems' },
@@ -43,6 +58,8 @@ export default function ChatBot() {
     const msgIdRef = useRef(0);
     const scrollRef = useRef(null);
     const inputRef = useRef(null);
+    const chatWindowRef = useRef(null);
+    const windowHeightRef = useRef(window.innerHeight);
 
     // ── Registration State ──────────────────────────────────────────────────
     const [regState, setRegState] = useState(null);
@@ -95,6 +112,46 @@ export default function ChatBot() {
         }
     }, [isMobile, isOpen, isMinimized]);
 
+    // ── Solution 1: visualViewport API (Android keyboard detection) ────────
+    useEffect(() => {
+        if (!window.visualViewport || !isOpen) return;
+
+        const handleViewportResize = () => {
+            const viewport = window.visualViewport;
+            if (chatWindowRef.current && isMobile) {
+                chatWindowRef.current.style.height = `${viewport.height}px`;
+                chatWindowRef.current.style.top = `${viewport.offsetTop}px`;
+            }
+            // Also scroll to bottom when keyboard opens
+            setTimeout(() => scrollToBottom(), 100);
+        };
+
+        window.visualViewport.addEventListener('resize', handleViewportResize);
+        window.visualViewport.addEventListener('scroll', handleViewportResize);
+
+        return () => {
+            window.visualViewport.removeEventListener('resize', handleViewportResize);
+            window.visualViewport.removeEventListener('scroll', handleViewportResize);
+        };
+    }, [isOpen, isMobile]);
+
+    // ── Solution 5: Resize detection fallback (keyboard open/close) ────────
+    useEffect(() => {
+        const handleResize = () => {
+            const newHeight = window.innerHeight;
+            const heightDiff = windowHeightRef.current - newHeight;
+
+            // Keyboard opened (height reduced by > 150px)
+            if (heightDiff > 150 && isMobile) {
+                setTimeout(() => scrollToBottom(), 100);
+            }
+            windowHeightRef.current = newHeight;
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [isMobile]);
+
     // Inactivity Nudge
     useEffect(() => {
         if (isOpen && !loading && messages.length > 0) {
@@ -110,6 +167,16 @@ export default function ChatBot() {
     const scrollToBottom = (behavior = 'smooth') => {
         if (scrollRef.current) {
             scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior });
+        }
+    };
+
+    // ── Solution 2: Input focus scroll (backup fix) ───────────────────────
+    const handleInputFocus = () => {
+        if (window.innerWidth < 768) {
+            setTimeout(() => {
+                inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                scrollToBottom();
+            }, 400); // wait for keyboard animation
         }
     };
 
@@ -194,28 +261,28 @@ export default function ChatBot() {
             state.selectedEvent = selected;
             state.step = 'name';
             setRegState(state);
-            addAyushMsg(`Registering for **${selected.title}**. What is your **full name**?`);
+            addAyushMsg(`Registering for ${h(selected.title, 'event')}. What is your ${h('full name', 'field')}?`);
             return;
         }
         if (state.step === 'name') {
             state.name = input;
             state.step = 'email';
             setRegState(state);
-            addAyushMsg(`Got it, ${input.split(' ')[0]}. Your **email address**?`);
+            addAyushMsg(`Got it, ${h(input.split(' ')[0], 'name')}. Your ${h('email address', 'field')}?`);
             return;
         }
         if (state.step === 'email') {
             state.email = input;
             state.step = 'rollNo';
             setRegState(state);
-            addAyushMsg('Your **roll number**?');
+            addAyushMsg(`Your ${h('roll number', 'field')}?`);
             return;
         }
         if (state.step === 'rollNo') {
             state.rollNo = input;
             state.step = 'phone';
             setRegState(state);
-            addAyushMsg('Final step: your **10-digit phone number**?');
+            addAyushMsg(`Final step: your ${h('10-digit phone number', 'field')}?`);
             return;
         }
         if (state.step === 'phone') {
@@ -239,7 +306,7 @@ export default function ChatBot() {
                 });
                 if (res.ok) {
                     setConfetti(true);
-                    addAyushMsg(`🎉 **Registration successful!** See you at **${state.selectedEvent.title}** 🙏`);
+                    addAyushMsg(`🎉 ${h('Registration successful!', 'success')} See you at ${h(state.selectedEvent.title, 'event')} 🙏`);
                     setRegState(null);
                 } else {
                     setError(true);
@@ -334,6 +401,7 @@ export default function ChatBot() {
         borderRadius: '20px'
     };
 
+    // Solution 3: Use dvh for mobile (dynamic viewport height)
     if (isMobile) {
         windowStyles = {
             position: 'fixed',
@@ -342,9 +410,12 @@ export default function ChatBot() {
             right: 0,
             bottom: 0,
             width: '100vw',
-            height: '100vh',
+            height: '100dvh',
+            minHeight: '-webkit-fill-available',
             borderRadius: '0',
-            zIndex: 99999
+            zIndex: 99999,
+            overscrollBehavior: 'contain',
+            touchAction: 'pan-y'
         };
     } else if (isTablet) {
         windowStyles = {
@@ -394,19 +465,21 @@ export default function ChatBot() {
 
             {/* ── CHAT WINDOW ───────────────────────────────────────────── */}
             {isOpen && (
-                <div style={{
-                    ...windowStyles,
-                    background: '#fff',
-                    boxShadow: '0 12px 48px rgba(0,0,0,0.25)',
-                    display: 'flex', flexDirection: 'column',
-                    overflow: 'hidden',
-                    animation: isMobile ? 'none' : 'windowEntrance 0.3s ease-out'
-                }}>
+                <div
+                    ref={chatWindowRef}
+                    style={{
+                        ...windowStyles,
+                        background: '#fff',
+                        boxShadow: '0 12px 48px rgba(0,0,0,0.25)',
+                        display: 'flex', flexDirection: 'column',
+                        overflow: 'hidden',
+                        animation: isMobile ? 'none' : 'windowEntrance 0.3s ease-out'
+                    }}>
                     {/* Header */}
                     <div style={{ background: `linear-gradient(135deg, ${COLORS.darkMaroon} 0%, ${COLORS.maroon} 100%)`, padding: '14px 16px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: `1px solid ${COLORS.gold}30` }}>
                         <div style={{ flex: 1 }}>
                             <div style={{ color: COLORS.gold, fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.3px' }}>Ayush AI</div>
-                            <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '10px', fontWeight: '500' }}>SNS Club · In memory of Ayush Aditya</div>
+                            <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: '10px', fontWeight: '500' }}></div>
                         </div>
                         <div style={{ display: 'flex', gap: '8px' }}>
                             <HeaderBtn onClick={() => { setMessages([]); hasGreeted.current = false; }} icon="♻️" title="Clear" />
@@ -421,7 +494,7 @@ export default function ChatBot() {
                             <div
                                 ref={scrollRef}
                                 onScroll={handleScroll}
-                                style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: '16px', background: COLORS.cream, position: 'relative' }}
+                                style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: '16px', background: 'linear-gradient(180deg, #fdf8f3 0%, #faf4eb 100%)', position: 'relative', minHeight: 0, WebkitOverflowScrolling: 'touch' }}
                             >
                                 {messages.map((msg) => (
                                     <MsgBubble
@@ -475,33 +548,39 @@ export default function ChatBot() {
                                 )}
                             </div>
 
-                            {/* Input Area */}
-                            <div style={{ padding: '15px', background: COLORS.cream, borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+                            {/* Input Area — Solution 4: Sticky bottom input */}
+                            <div style={{ padding: '15px', background: COLORS.cream, borderTop: '1px solid rgba(0,0,0,0.08)', position: 'sticky', bottom: 0, zIndex: 10 }}>
                                 <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-end', background: 'white', borderRadius: '28px', padding: '6px 8px 6px 16px', border: `1.5px solid ${COLORS.maroon}40` }}>
                                     <textarea
                                         ref={inputRef}
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
                                         onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
+                                        onFocus={handleInputFocus}
                                         placeholder="Ask Ayush AI anything..."
                                         rows={1}
-                                        style={{ flex: 1, border: 'none', background: 'none', outline: 'none', padding: '10px 0', fontSize: '14px', fontFamily: 'serif', resize: 'none', maxHeight: '120px' }}
+                                        inputMode="text"
+                                        autoComplete="off"
+                                        autoCorrect="off"
+                                        spellCheck="false"
+                                        style={{ flex: 1, border: 'none', background: 'none', outline: 'none', padding: '10px 0', fontSize: '14px', fontFamily: 'serif', resize: 'none', maxHeight: '120px', touchAction: 'manipulation' }}
                                         onInput={(e) => { e.target.style.height = 'auto'; e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`; }}
                                     />
                                     <button
-                                        onClick={() => sendMessage()}
+                                        onClick={() => { sendMessage(); if (isMobile) setTimeout(() => inputRef.current?.focus(), 50); }}
                                         disabled={!input.trim() || loading}
                                         style={{
                                             width: '40px', height: '40px', borderRadius: '50%', border: 'none',
                                             background: sendSuccess ? COLORS.sage : (input.trim() ? COLORS.maroon : '#ddd'),
-                                            color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                            color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                            touchAction: 'manipulation'
                                         }}
                                     >
                                         ➔
                                     </button>
                                 </div>
                                 <div style={{ textAlign: 'center', padding: '10px 0 0', fontSize: '10px', color: 'rgba(0,0,0,0.4)' }}>
-                                    🕯️ In memory of Ayush Aditya · SNS Club
+
                                 </div>
                             </div>
                         </>
@@ -559,7 +638,7 @@ function MsgBubble({ msg, onAction, onRegister, onConfirm, onCancel }) {
     if (type === 'tribute_welcome') {
         return (
             <div style={{ background: '#fffcf7', border: `1.5px solid ${COLORS.gold}`, borderRadius: '20px', padding: '24px', textAlign: 'center', boxShadow: '0 6px 20px rgba(242,204,143,0.2)' }}>
-                <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', color: COLORS.darkMaroon, fontFamily: 'serif' }}>Namaste 🙏</h3>
+                <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', color: COLORS.darkMaroon, fontFamily: 'serif' }}> </h3>
                 <p style={{ fontSize: '15px', fontWeight: 'bold', margin: '0 0 10px 0', color: COLORS.darkMaroon }}>Welcome to SNS Club AI.</p>
                 <p style={{ fontSize: '14px', fontStyle: 'italic', lineHeight: '1.7', color: COLORS.darkMaroon, opacity: 0.9 }}>
                     This assistant is dedicated to the memory of Ayush Aditya —
@@ -653,7 +732,7 @@ function MsgBubble({ msg, onAction, onRegister, onConfirm, onCancel }) {
                     border: isUser ? 'none' : `1.2px solid ${COLORS.maroon}15`,
                 }}
             >
-                {msg.content}
+                {isUser ? msg.content : <span dangerouslySetInnerHTML={{ __html: msg.content }} />}
             </div>
 
             <div style={{ fontSize: '10px', color: 'rgba(0,0,0,0.35)', marginTop: '6px', fontWeight: '500', textAlign: isUser ? 'right' : 'left' }}>
