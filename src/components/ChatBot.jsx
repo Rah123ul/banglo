@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 //  Dedicated to the memory of Ayush Aditya (1998-2024)
 // ─────────────────────────────────────────────────────────────────────────────
 
-const API_BASE = 'https://sns-backend-t230.onrender.com';
+const API_BASE = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 const COLORS = {
     maroon: '#be3a34',
     darkMaroon: '#4a1d1d',
@@ -198,6 +198,7 @@ export default function ChatBot() {
             const greetingMsg = {
                 role: 'assistant',
                 type: 'tribute_welcome',
+                content: "Namaste! I am Ayush AI, a memorial assistant dedicated to Ayush Aditya. How can I help you today?",
                 id: ++msgIdRef.current
             };
             setMessages([greetingMsg]);
@@ -225,7 +226,7 @@ export default function ChatBot() {
         try {
             const res = await fetch(`${API_BASE}/api/events`);
             const events = await res.json();
-            const activeEvents = events.filter((e) => e.isActive);
+            const activeEvents = events; // filtered by backend
             if (activeEvents.length === 0) {
                 addAyushMsg('No active events for registration right now. Stay tuned! 🙏');
                 return;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const API_BASE_URL = 'https://sns-backend-t230.onrender.com';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
 
 const adminStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Cinzel:wght@400;500;600&family=Lato:wght@300;400;700&display=swap');
@@ -312,14 +312,8 @@ const AdminPanel = () => {
     const fetchData = async () => {
         try {
             const headers = { 'x-admin-password': password };
-
-            const [evRes, regRes] = await Promise.all([
-                fetch(`${API_BASE_URL}/api/admin/events`, { headers }),
-                fetch(`${API_BASE_URL}/api/admin/registrations`, { headers }),
-            ]);
-
+            const evRes = await fetch(`${API_BASE_URL}/api/admin/events`, { headers });
             if (evRes.ok) setEvents(await evRes.json());
-            if (regRes.ok) setRegistrations(await regRes.json());
         } catch (err) {
             console.error('Error fetching admin data:', err);
         }
@@ -329,6 +323,25 @@ const AdminPanel = () => {
         if (authenticated) fetchData();
         // eslint-disable-next-line
     }, [authenticated]);
+
+    const fetchRegistrations = async () => {
+        try {
+            const headers = { 'x-admin-password': password };
+            const endpoint = selectedEventFilter === 'all' 
+                ? `${API_BASE_URL}/api/admin/registrations`
+                : `${API_BASE_URL}/api/admin/registrations/${selectedEventFilter}`;
+            const regRes = await fetch(endpoint, { headers });
+            if (regRes.ok) setRegistrations(await regRes.json());
+        } catch (err) {
+            console.error('Error fetching registrations:', err);
+        }
+    };
+
+    useEffect(() => {
+        if (authenticated) fetchRegistrations();
+        // eslint-disable-next-line
+    }, [selectedEventFilter, authenticated]);
+
 
     // Delete registration
     const deleteRegistration = async (id) => {
@@ -396,9 +409,7 @@ const AdminPanel = () => {
     };
 
     // Filter registrations
-    const filteredRegistrations = selectedEventFilter === 'all'
-        ? registrations
-        : registrations.filter((r) => r.eventId && r.eventId._id === selectedEventFilter);
+    const filteredRegistrations = registrations; // now filtered by backend
 
     // Total counts
     const totalRegistrations = registrations.length;
