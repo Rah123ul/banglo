@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/banglo/static/css/main.57a6b48a.css",
-    "main.js": "/banglo/static/js/main.ba20d06d.js",
+    "main.js": "/banglo/static/js/main.a0437934.js",
     "index.html": "/banglo/index.html",
     "main.57a6b48a.css.map": "/banglo/static/css/main.57a6b48a.css.map",
-    "main.ba20d06d.js.map": "/banglo/static/js/main.ba20d06d.js.map"
+    "main.a0437934.js.map": "/banglo/static/js/main.a0437934.js.map"
   },
   "entrypoints": [
     "static/css/main.57a6b48a.css",
-    "static/js/main.ba20d06d.js"
+    "static/js/main.a0437934.js"
   ]
 }
