@@ -49,6 +49,7 @@ export default function ChatBot() {
     const [fabVisible, setFabVisible] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
     const [sendSuccess, setSendSuccess] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
 
     // ── Session & Memorial State ──────────────────────────────────────────────
     const hasGreeted = useRef(false);
@@ -101,7 +102,7 @@ export default function ChatBot() {
 
     // Body Scroll Lock
     useEffect(() => {
-        if (isMobile && isOpen && !isMinimized) {
+        if ((isMobile || isExpanded) && isOpen && !isMinimized) {
             document.body.style.overflow = 'hidden';
             document.body.style.position = 'fixed';
             document.body.style.width = '100%';
@@ -110,7 +111,7 @@ export default function ChatBot() {
             document.body.style.position = '';
             document.body.style.width = '';
         }
-    }, [isMobile, isOpen, isMinimized]);
+    }, [isMobile, isExpanded, isOpen, isMinimized]);
 
     // ── Solution 1: visualViewport API (Android keyboard detection) ────────
     useEffect(() => {
@@ -393,17 +394,29 @@ export default function ChatBot() {
     // Window Dimension Logic 
     let windowStyles = {
         position: 'fixed',
-        bottom: '148px',
+        bottom: '100px', // Standardized bottom gap
         right: '24px',
-        width: '380px',
-        height: '600px',
-        minHeight: '550px',
+        width: '400px', // Standardized width
+        height: 'min(700px, calc(100vh - 120px))', // Standardized height with viewport guard
         zIndex: 9998,
-        borderRadius: '20px'
+        borderRadius: '24px', // Premium rounded corners
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' // Smooth transitions
     };
 
-    // Solution 3: Use dvh for mobile (dynamic viewport height)
-    if (isMobile) {
+    if (isExpanded) {
+        windowStyles = {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            borderRadius: '0',
+            zIndex: 99999,
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+        };
+    } else if (isMobile) {
         windowStyles = {
             position: 'fixed',
             top: 0,
@@ -484,7 +497,16 @@ export default function ChatBot() {
                         </div>
                         <div style={{ display: 'flex', gap: '8px' }}>
                             <HeaderBtn onClick={() => { setMessages([]); hasGreeted.current = false; }} icon="♻️" title="Clear" />
-                            {!isMobile && <HeaderBtn onClick={() => setIsMinimized(!isMinimized)} icon={isMinimized ? "↑" : "−"} title="Minimize" />}
+                            {!isMobile && (
+                                <>
+                                    <HeaderBtn 
+                                        onClick={() => setIsExpanded(!isExpanded)} 
+                                        icon={isExpanded ? "❐" : "⛶"} 
+                                        title={isExpanded ? "Restore" : "Expand"} 
+                                    />
+                                    <HeaderBtn onClick={() => setIsMinimized(!isMinimized)} icon={isMinimized ? "↑" : "−"} title="Minimize" />
+                                </>
+                            )}
                             <HeaderBtn onClick={() => setIsOpen(false)} icon="×" title="Close" />
                         </div>
                     </div>
