@@ -11,7 +11,7 @@ const Header = () => {
       { name: 'Founder', path: '/founder' },
       { name: 'Science', path: '/science' },
       { name: 'Spirituality', path: '/spirituality' },
-      { name: 'Gallery', path: '/gallery' },
+      { name: 'Activities', path: '/activities' },
       { name: 'About Us', path: '/overview' },
       { name: 'Events', path: '/events' },
     ];
@@ -141,7 +141,7 @@ const Header = () => {
               { name: 'Founder', path: '/founder' },
               { name: 'Science', path: '/science' },
               { name: 'Spirituality', path: '/spirituality' },
-              { name: 'Gallery', path: '/gallery' },
+              { name: 'Activities', path: '/activities' },
               { name: 'About Us', path: '/overview' },
               { name: 'Events', path: '/events' },
             ].map((item, i) => {

@@ -442,7 +442,7 @@ export default function ChatBot() {
     return (
         <>
             {/* ── FAB BUTTON ────────────────────────────────────────────── */}
-            {fabVisible && (
+            {fabVisible && !isOpen && (
                 <div
                     className="ayush-ai-trigger-container"
                     style={{
