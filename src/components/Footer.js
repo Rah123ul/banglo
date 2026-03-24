@@ -91,9 +91,9 @@ const Footer = () => {
             <div className="flex flex-col items-center mb-6">
               <h4 style={headingStyle}>CONNECT</h4>
               <div className="flex gap-4">
-                <SocialIcon href="https://www.instagram.com/sns_nitc/" label="Instagram" icon="instagram" />
-                <SocialIcon href="https://www.youtube.com/@snsclubnitc" label="YouTube" icon="youtube" />
-                <SocialIcon href="https://www.linkedin.com/company/sns-club-nitc/" label="LinkedIn" icon="linkedin" />
+                <SocialIcon href="https://www.instagram.com/science_and_spirituality_nitc/p/DUTi1SMkvBN/" label="Instagram" icon="instagram" />
+                <SocialIcon href="https://www.youtube.com/@SNS_NIT_CALICUT" label="YouTube" icon="youtube" />
+                <SocialIcon href="https://www.linkedin.com/company/science-spirituality-club-nit-calicut/posts/?feedView=all" label="LinkedIn" icon="linkedin" />
               </div>
             </div>
           </div>
