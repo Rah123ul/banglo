@@ -512,101 +512,218 @@ export default function ChatBot() {
                     </div>
 
                     {!isMinimized && (
-                        <>
-                            {/* Messages Container */}
-                            <div
-                                ref={scrollRef}
-                                onScroll={handleScroll}
-                                style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: '16px', background: 'linear-gradient(180deg, #fdf8f3 0%, #faf4eb 100%)', position: 'relative', minHeight: 0, WebkitOverflowScrolling: 'touch' }}
-                            >
-                                {messages.map((msg) => (
-                                    <MsgBubble
-                                        key={msg.id} msg={msg}
-                                        onAction={(q) => sendMessage(q)}
-                                        onRegister={startRegistrationFlow}
-                                        onConfirm={() => handleRegistrationStep('confirm')}
-                                        onCancel={() => handleRegistrationStep('cancel')}
-                                    />
-                                ))}
-
-                                {loading && (
-                                    <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-end' }}>
-                                        <div className="lotus-pulse">🪷</div>
-                                        <div style={{ background: 'white', padding: '10px 15px', borderRadius: '15px 15px 15px 4px', border: `1px solid ${COLORS.maroon}15`, fontSize: '14px' }}>Seeking knowledge...</div>
+                        <div style={{ display: 'flex', flexDirection: 'row', flex: 1, overflow: 'hidden' }}>
+                            {/* Left Sidebar for Desktop Expanded View */}
+                            {isExpanded && !isMobile && (
+                                <div style={{ 
+                                    width: '260px', 
+                                    background: '#f9f9f9', 
+                                    borderRight: '1px solid #e5e5e5', 
+                                    padding: '24px 16px', 
+                                    display: 'flex', 
+                                    flexDirection: 'column', 
+                                    gap: '12px', 
+                                    overflowY: 'auto' 
+                                }}>
+                                    <div style={{ marginBottom: '10px' }}>
+                                        <h3 style={{ margin: '0 0 5px 0', fontSize: '18px', color: COLORS.darkMaroon, fontFamily: 'serif' }}>Ayush AI</h3>
+                                        <p style={{ fontSize: '13px', color: '#666', margin: 0 }}>Memorial Assistant</p>
                                     </div>
-                                )}
-
-                                {error && (
-                                    <div style={{ padding: '15px', background: '#fff0f0', border: '1px solid #ffcdd2', borderRadius: '12px', textAlign: 'center' }}>
-                                        <p style={{ color: COLORS.darkMaroon, fontSize: '13px', margin: '0 0 10px 0' }}>🕯️ Ayush AI is momentarily away. Please try again.</p>
-                                        <button onClick={handleRetry} style={{ padding: '8px 20px', background: COLORS.maroon, color: 'white', border: 'none', borderRadius: '20px', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold' }}>Retry</button>
-                                    </div>
-                                )}
-
-                                {/* Scroll Nudge */}
-                                {showScrollNudge && (
+                                    
                                     <button
-                                        onClick={() => scrollToBottom()}
+                                        onClick={startRegistrationFlow}
                                         style={{
-                                            position: 'absolute',
-                                            bottom: '70px',
-                                            left: '50%',
-                                            transform: 'translateX(-50%)',
-                                            background: COLORS.darkMaroon,
-                                            color: COLORS.gold,
-                                            border: 'none',
-                                            borderRadius: '20px',
-                                            padding: '8px 16px',
-                                            fontSize: '11px',
-                                            fontWeight: 'bold',
-                                            cursor: 'pointer',
-                                            zIndex: 100,
-                                            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
-                                            whiteSpace: 'nowrap',
-                                            pointerEvents: 'auto'
+                                            width: '100%', padding: '12px 16px', background: 'white', color: COLORS.darkMaroon,
+                                            border: '1px solid #e5e5e5', borderRadius: '12px', fontWeight: '500', cursor: 'pointer',
+                                            display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '10px',
+                                            fontSize: '14px', transition: 'background 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
                                         }}
+                                        onMouseOver={(e) => e.currentTarget.style.background = '#f0f0f0'}
+                                        onMouseOut={(e) => e.currentTarget.style.background = 'white'}
                                     >
-                                        ↓ New message
+                                        <span style={{ fontSize: '16px' }}>📋</span> Register for an Event
                                     </button>
-                                )}
-                            </div>
 
-                            {/* Input Area — Solution 4: Sticky bottom input */}
-                            <div style={{ padding: '15px', background: COLORS.cream, borderTop: '1px solid rgba(0,0,0,0.08)', position: 'sticky', bottom: 0, zIndex: 10 }}>
-                                <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-end', background: 'white', borderRadius: '28px', padding: '6px 8px 6px 16px', border: `1.5px solid ${COLORS.maroon}40` }}>
-                                    <textarea
-                                        ref={inputRef}
-                                        value={input}
-                                        onChange={(e) => setInput(e.target.value)}
-                                        onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
-                                        onFocus={handleInputFocus}
-                                        placeholder="Ask Ayush AI anything..."
-                                        rows={1}
-                                        inputMode="text"
-                                        autoComplete="off"
-                                        autoCorrect="off"
-                                        spellCheck="false"
-                                        style={{ flex: 1, border: 'none', background: 'none', outline: 'none', padding: '10px 0', fontSize: '14px', fontFamily: 'serif', resize: 'none', maxHeight: '120px', touchAction: 'manipulation' }}
-                                        onInput={(e) => { e.target.style.height = 'auto'; e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`; }}
-                                    />
+                                    <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#888', marginTop: '10px', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                        Options
+                                    </div>
+
+                                    {QUICK_ACTIONS.map(a => (
+                                        <button 
+                                            key={a.label} 
+                                            onClick={() => sendMessage(a.query)} 
+                                            style={{ 
+                                                padding: '10px 12px', background: 'transparent', border: 'none', 
+                                                borderRadius: '8px', fontSize: '14px', fontWeight: '400', 
+                                                color: '#333', cursor: 'pointer', textAlign: 'left',
+                                                transition: 'background 0.2s', display: 'flex', alignItems: 'center', gap: '10px'
+                                            }}
+                                            onMouseOver={(e) => e.currentTarget.style.background = '#ebebeb'}
+                                            onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
+                                        >
+                                            {a.label}
+                                        </button>
+                                    ))}
+
+                                    <div style={{ flex: 1 }} />
+
                                     <button
-                                        onClick={() => { sendMessage(); if (isMobile) setTimeout(() => inputRef.current?.focus(), 50); }}
-                                        disabled={!input.trim() || loading}
-                                        style={{
-                                            width: '40px', height: '40px', borderRadius: '50%', border: 'none',
-                                            background: sendSuccess ? COLORS.sage : (input.trim() ? COLORS.maroon : '#ddd'),
-                                            color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                            touchAction: 'manipulation'
+                                        onClick={() => sendMessage('About Ayush Aditya')}
+                                        style={{ 
+                                            padding: '12px', background: 'transparent', border: 'none', 
+                                            borderRadius: '8px', fontSize: '14px', fontWeight: '400', 
+                                            color: '#333', cursor: 'pointer', textAlign: 'left',
+                                            transition: 'background 0.2s', display: 'flex', alignItems: 'center', gap: '10px',
+                                            marginTop: 'auto'
                                         }}
+                                        onMouseOver={(e) => e.currentTarget.style.background = '#ebebeb'}
+                                        onMouseOut={(e) => e.currentTarget.style.background = 'transparent'}
                                     >
-                                        ➔
+                                        <span style={{ fontSize: '16px' }}>🕯️</span> About Ayush Aditya
                                     </button>
                                 </div>
-                                <div style={{ textAlign: 'center', padding: '10px 0 0', fontSize: '10px', color: 'rgba(0,0,0,0.4)' }}>
+                            )}
 
+                            {/* Main Chat Area */}
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
+                                {/* Messages Container */}
+                                <div
+                                    ref={scrollRef}
+                                    onScroll={handleScroll}
+                                    style={{ 
+                                        flex: 1, overflowY: 'auto', overflowX: 'hidden', 
+                                        padding: (isExpanded && !isMobile) ? '40px 0 140px 0' : '20px 16px 140px 16px', 
+                                        display: 'flex', flexDirection: 'column', gap: '24px', 
+                                        background: (isExpanded && !isMobile) ? '#ffffff' : 'linear-gradient(180deg, #fdf8f3 0%, #faf4eb 100%)', 
+                                        position: 'relative', minHeight: 0, WebkitOverflowScrolling: 'touch',
+                                        alignItems: 'center'
+                                    }}
+                                >
+                                    {(isExpanded && !isMobile && messages.filter(m => m.type !== 'tribute_welcome').length === 0) && (
+                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: '300px' }}>
+                                            <div style={{ 
+                                                width: '64px', height: '64px', borderRadius: '50%', background: `linear-gradient(135deg, ${COLORS.maroon} 0%, #8B2020 100%)`, 
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '30px', fontFamily: 'serif', marginBottom: '20px' 
+                                            }}>
+                                                A
+                                            </div>
+                                            <h2 style={{ fontSize: '28px', color: '#111', fontWeight: '600', margin: '0 0 10px 0', fontFamily: 'system-ui, -apple-system, sans-serif' }}>How can I help you today?</h2>
+                                        </div>
+                                    )}
+
+                                    <div style={{ width: '100%', maxWidth: (isExpanded && !isMobile) ? '800px' : '100%', display: 'flex', flexDirection: 'column', gap: '20px', padding: (isExpanded && !isMobile) ? '0 20px' : '0' }}>
+                                        {messages.filter(msg => !(isExpanded && !isMobile && msg.type === 'tribute_welcome')).map((msg) => (
+                                            <MsgBubble
+                                                key={msg.id} msg={msg}
+                                                onAction={(q) => sendMessage(q)}
+                                                onRegister={startRegistrationFlow}
+                                                onConfirm={() => handleRegistrationStep('confirm')}
+                                                onCancel={() => handleRegistrationStep('cancel')}
+                                            />
+                                        ))}
+
+                                        {loading && (
+                                            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-end', alignSelf: 'flex-start' }}>
+                                                <div className="lotus-pulse" style={{ fontSize: '20px' }}>🪷</div>
+                                                <div style={{ background: (isExpanded && !isMobile) ? '#f4f4f4' : 'white', padding: '10px 16px', borderRadius: '18px 18px 18px 4px', fontSize: '14px', color: '#444' }}>Thinking...</div>
+                                            </div>
+                                        )}
+
+                                        {error && (
+                                            <div style={{ padding: '15px', background: '#fff0f0', border: '1px solid #ffcdd2', borderRadius: '12px', textAlign: 'center', alignSelf: 'center', width: '100%', maxWidth: '400px' }}>
+                                                <p style={{ color: COLORS.darkMaroon, fontSize: '13px', margin: '0 0 10px 0' }}>🕯️ Ayush AI is momentarily away. Please try again.</p>
+                                                <button onClick={handleRetry} style={{ padding: '8px 20px', background: COLORS.maroon, color: 'white', border: 'none', borderRadius: '20px', fontSize: '12px', cursor: 'pointer', fontWeight: 'bold' }}>Retry</button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    
+                                    {/* Scroll Nudge */}
+                                    {showScrollNudge && (
+                                        <button
+                                            onClick={() => scrollToBottom()}
+                                            style={{
+                                                position: 'fixed',
+                                                bottom: '120px',
+                                                left: (isExpanded && !isMobile) ? 'calc(50% + 130px)' : '50%',
+                                                transform: 'translateX(-50%)',
+                                                background: 'rgba(255,255,255,0.9)',
+                                                color: '#333',
+                                                border: '1px solid #e5e5e5',
+                                                borderRadius: '50%',
+                                                width: '36px', height: '36px',
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                fontSize: '16px',
+                                                cursor: 'pointer',
+                                                zIndex: 100,
+                                                boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                                                pointerEvents: 'auto'
+                                            }}
+                                        >
+                                            ↓
+                                        </button>
+                                    )}
+                                </div>
+
+                                {/* Input Area — Solution 4: Sticky bottom input */}
+                                <div style={{ 
+                                    padding: (isExpanded && !isMobile) ? '20px' : '15px', 
+                                    background: (isExpanded && !isMobile) ? 'linear-gradient(180deg, rgba(255,255,255,0) 0%, #ffffff 40%)' : COLORS.cream, 
+                                    position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 10,
+                                    borderTop: (isExpanded && !isMobile) ? 'none' : '1px solid rgba(0,0,0,0.08)'
+                                }}>
+                                    <div style={{ 
+                                        width: '100%', 
+                                        maxWidth: (isExpanded && !isMobile) ? '800px' : 'none', 
+                                        margin: '0 auto',
+                                        display: 'flex', gap: '10px', alignItems: 'flex-end', 
+                                        background: (isExpanded && !isMobile) ? '#f4f4f4' : 'white', 
+                                        borderRadius: '24px', 
+                                        padding: '8px 10px 8px 20px', 
+                                        border: (isExpanded && !isMobile) ? '1px solid transparent' : `1.5px solid ${COLORS.maroon}40`,
+                                        boxShadow: (isExpanded && !isMobile) ? '0 0 15px rgba(0,0,0,0.05)' : 'none'
+                                    }}>
+                                        <textarea
+                                            ref={inputRef}
+                                            value={input}
+                                            onChange={(e) => setInput(e.target.value)}
+                                            onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
+                                            onFocus={handleInputFocus}
+                                            placeholder="Ask anything..."
+                                            rows={1}
+                                            inputMode="text"
+                                            autoComplete="off"
+                                            autoCorrect="off"
+                                            spellCheck="false"
+                                            style={{ 
+                                                flex: 1, border: 'none', background: 'none', outline: 'none', 
+                                                padding: '12px 0', fontSize: '15px', fontFamily: (isExpanded && !isMobile) ? 'system-ui, -apple-system, sans-serif' : 'serif', 
+                                                resize: 'none', maxHeight: '150px', touchAction: 'manipulation', color: '#111',
+                                                lineHeight: '1.4'
+                                            }}
+                                            onInput={(e) => { e.target.style.height = 'auto'; e.target.style.height = `${Math.min(e.target.scrollHeight, 150)}px`; }}
+                                        />
+                                        <button
+                                            onClick={() => { sendMessage(); if (isMobile) setTimeout(() => inputRef.current?.focus(), 50); }}
+                                            disabled={!input.trim() || loading}
+                                            style={{
+                                                width: '36px', height: '36px', borderRadius: '50%', border: 'none',
+                                                background: sendSuccess ? COLORS.sage : (input.trim() ? (isExpanded && !isMobile ? '#111' : COLORS.maroon) : (isExpanded && !isMobile ? '#e5e5e5' : '#ddd')),
+                                                color: sendSuccess ? 'white' : (input.trim() ? 'white' : (isExpanded && !isMobile ? '#999' : 'white')), 
+                                                cursor: (input.trim() && !loading) ? 'pointer' : 'default', 
+                                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                touchAction: 'manipulation', transition: 'background 0.2s',
+                                                marginBottom: '4px'
+                                            }}
+                                        >
+                                            <span style={{ fontSize: '18px', fontWeight: 'bold' }}>↑</span>
+                                        </button>
+                                    </div>
+                                    <div style={{ textAlign: 'center', padding: '10px 0 0', fontSize: '11px', color: '#888', opacity: (isExpanded && !isMobile) ? 1 : 0.6 }}>
+                                        Ayush AI can make mistakes. Consider verifying important information.
+                                    </div>
                                 </div>
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
             )}
