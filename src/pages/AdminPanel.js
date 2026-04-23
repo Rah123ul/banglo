@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://sns-backend-t230.onrender.com' : 'http://localhost:5001';
 
 const adminStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Cinzel:wght@400;500;600&family=Lato:wght@300;400;700&display=swap');
@@ -284,8 +284,6 @@ const AdminPanel = () => {
         title: '', month: '', day: '', time: '', location: '', description: '', tag: ''
     });
     const [creating, setCreating] = useState(false);
-
-    const adminPassword = authenticated ? password : '';
 
     // Login
     const handleLogin = async (e) => {

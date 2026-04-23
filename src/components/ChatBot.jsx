@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 //  Dedicated to the memory of Ayush Aditya (1998-2024)
 // ─────────────────────────────────────────────────────────────────────────────
 
-const API_BASE = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+const API_BASE = process.env.NODE_ENV === 'production' ? 'https://sns-backend-t230.onrender.com' : 'http://localhost:5001';
 const COLORS = {
     maroon: '#be3a34',
     darkMaroon: '#4a1d1d',
@@ -64,6 +64,7 @@ export default function ChatBot() {
 
     // ── Registration State ──────────────────────────────────────────────────
     const [regState, setRegState] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [confetti, setConfetti] = useState(false);
 
     // ── Initialization & Detection ──────────────────────────────────────────
@@ -191,6 +192,7 @@ export default function ChatBot() {
 
     useEffect(() => {
         if (!showScrollNudge) scrollToBottom();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messages, loading]);
 
     useEffect(() => {
@@ -381,6 +383,7 @@ export default function ChatBot() {
             setError(true);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [input, loading, messages, regState]);
 
     const handleRetry = () => {

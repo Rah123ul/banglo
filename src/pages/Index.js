@@ -95,12 +95,12 @@ const Index = () => {
 
         {/* Abstract Background Aesthetic - Left (Sri Yantra) */}
         <div className="absolute -left-32 md:-left-80 -top-20 opacity-[0.04] pointer-events-none mix-blend-multiply" style={{ animation: 'spin 180s linear infinite' }}>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sri_Yantra_2.svg/1024px-Sri_Yantra_2.svg.png" alt="" className="w-[600px] md:w-[1000px] h-auto" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Sri_Yantra_2.svg" alt="" className="w-[600px] md:w-[1000px] h-auto" />
         </div>
 
         {/* Abstract Background Aesthetic - Right (Dharma Chakra) */}
         <div className="absolute -right-32 md:-right-80 -bottom-40 opacity-[0.03] pointer-events-none mix-blend-multiply" style={{ animation: 'spin 240s linear infinite reverse' }}>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Dharmacakra.svg/1024px-Dharmacakra.svg.png" alt="" className="w-[600px] md:w-[1000px] h-auto" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Dharmacakra.svg" alt="" className="w-[600px] md:w-[1000px] h-auto" />
         </div>
 
         <div className="container mx-auto text-center max-w-6xl relative z-10">

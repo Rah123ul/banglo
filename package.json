@@ -18,7 +18,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "dev": "concurrently \"npm start\" \"cd server && npm run dev\""
   },
   "eslintConfig": {
     "extends": [
@@ -38,7 +39,12 @@
     ]
   },
   "devDependencies": {
+    "autoprefixer": "^10.5.0",
+    "concurrently": "^9.2.1",
     "gh-pages": "^6.3.0",
-    "react-scripts": "^5.0.1"
+    "install": "^0.13.0",
+    "postcss": "^8.5.10",
+    "react-scripts": "^5.0.1",
+    "tailwindcss": "^3.4.19"
   }
 }
